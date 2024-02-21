@@ -1,8 +1,8 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Berry - React Material Admin Dashboard Template</title>
-    <link rel="icon" href="%PUBLIC_URL%/favicon.svg" />
+    <title>Bupa</title>
+    <link rel="icon" href="./admin.svg" />
     <!-- Meta Tags-->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -31,10 +31,12 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <script>
-      console.log(localStorage.getItem('acc-token'));
-      if (!localStorage.getItem('acc-token')) {
+      console.log(localStorage.getItem("acc-token"));
+      if (!localStorage.getItem("acc-token")) {
         // var specificRoute = 'http://localhost:3000/free/login';
-        var specificRoute = 'http://localhost:3000/login';
+        var specificRoute = `${
+          window.location.protocol + "//" + window.location.host
+        }/login`;
 
         // Replace the current URL with the specific route without refreshing the page
         history.replaceState(null, null, specificRoute);
