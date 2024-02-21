@@ -1,0 +1,118 @@
+:root {
+  --transparent: rgba(0, 0, 0, 0);
+  --white: #ffffff;
+  --dr-white: #fafafa;
+  --black: #000000;
+  --errie-black: #1b1b1b;
+  --rhine-castle: #5f5f5f;
+  --brown: #ad6b46;
+  --off-white: #fff9f0;
+  --light-grey: #f7f7f7;
+  --pale-grey: #ededed;
+  --dark-grey: #767676;
+  --darkest-grey: #494949;
+  --grey-text: #1b1b1bb2;
+  --orange: #f9cc61;
+  --line: #a4a4a4;
+  --dark-charcoal: #323232;
+  --unicorn-silver: #e8e8e8;
+  --dreamy-cloud: #e5e7eb;
+  --placeholder-text: #8d8d8d;
+  --error: #f04438;
+  --heavy-blue-grey: #a0a8b0;
+}
+
+/* formik */
+
+.error {
+  color: var(--error);
+  font-size: 0.75rem;
+  text-align: left;
+  /* margin-top: 0.25rem; */
+}
+
+input:focus,
+select:focus {
+  /* border-color: #4299e1 !important; */
+  border: 1px solid #4299e1 !important;
+}
+
+input.input-error,
+select.input-error,
+.error-pick {
+  border: 1px solid var(--error);
+  /* margin-bottom: 0; */
+}
+
+button:disabled {
+  opacity: 0.35;
+}
+
+input:disabled {
+  color: rgb(159, 159, 159);
+  background-color: #f1f1f1;
+}
+
+/* pdf */
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+body {
+}
+
+.hide_scrollbar::-webkit-scrollbar {
+  width: 6px !important; /* Set to zero for hiding the scrollbar */
+  height: 0px !important; /* Set to zero for hiding the scrollbar */
+}
+
+.hide_scrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--brown); /* You can set a color for the thumb */
+}
+
+.hide_scrollbar::-webkit-scrollbar-track {
+  background-color: #e5e7eb; /* You can set a color for the track */
+}
+/* table {
+  border-collapse: separate;
+  border-spacing: 0 5px;
+  width: 100%;
+} */
+/* th,
+td {
+  border: none;
+  padding: 8px;
+  text-align: left;
+} */
+/* tr:nth-child(odd) {
+  background-color: #e5e5e5;
+} */
+/* th {
+  background-color: #1f497d;
+  color: white;
+} */
+/* tr {
+  margin-bottom: 50px;
+  background-color: #e5e5e5;
+} */
+@media screen {
+  div.divFooter {
+    /* display: none; */
+    position: fixed;
+    bottom: 0;
+  }
+}
+@media print {
+  div.divFooter {
+    position: fixed;
+    bottom: 0;
+  }
+}
+.page-break {
+  page-break-before: always;
+}

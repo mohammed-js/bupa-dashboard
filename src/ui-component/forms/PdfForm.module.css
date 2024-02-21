@@ -1,0 +1,132 @@
+.container {
+  background-color: var(--white);
+  width: 500px;
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px;
+}
+.bottom_margin {
+  margin-bottom: 10px;
+}
+.title {
+  color: var(--errie-black);
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+.sub_title {
+  color: var(--rhine-castle);
+  font-size: 14px;
+  font-weight: 400;
+}
+.label {
+  font-size: 14px;
+  font-weight: 450;
+  margin-bottom: 10px;
+}
+.error {
+  color: var(--error);
+}
+.input_container_full {
+  width: 100%;
+}
+.input_container_half {
+  width: 48%;
+}
+.input_container_third {
+  width: 30%;
+}
+.input {
+  width: 100% !important;
+  padding: 11px 14px 11px 14px;
+  border: 1px solid var(--dreamy-cloud);
+  border-radius: 8px;
+}
+.input::placeholder {
+  color: var(--placeholder-text);
+}
+.checkbox {
+  cursor: pointer;
+  width: 15px;
+}
+.brown_button {
+  font-size: 18px;
+  /* min-width: 200px; */
+  margin: auto;
+  cursor: pointer;
+  color: var(--white);
+  background-color: #0079c8;
+  padding: 10px 15px;
+  border-radius: 10px;
+  border: none;
+  transition: 0.5s;
+}
+.brown_button:hover {
+  opacity: 0.8;
+}
+.grey_button {
+  cursor: pointer;
+  color: var(--black);
+  background-color: var(--dr-white);
+  padding: 13px;
+  border-radius: 10px;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+.footer_main {
+  color: var(--rhine-castle);
+}
+.footer_sub {
+  font-weight: bold;
+  color: var(--brown);
+  cursor: pointer;
+}
+.remember_me_line {
+  display: flex;
+  gap: 10px;
+}
+.remember_me_label {
+  color: var(--rhine-castle);
+}
+.remember_me_link {
+  margin-left: auto;
+  cursor: pointer;
+  color: var(--black);
+}
+/* Media query for screens smaller than 600px (e.g., smartphones) */
+@media (max-width: 600px) {
+  .input_container_half {
+    width: 100%;
+  }
+  .input_container_third {
+    width: 100%;
+  }
+  .container {
+    width: 250px;
+  }
+}
+
+/* Media query for screens between 601px and 900px (e.g., tablets) */
+@media (min-width: 601px) and (max-width: 900px) {
+}
+
+/* Media query for screens between 901px and 1200px (e.g., larger tablets and small desktops) */
+@media (min-width: 901px) and (max-width: 1200px) {
+}
+
+/* Media query for screens larger than 1200px (e.g., large desktops) */
+@media (min-width: 1201px) {
+}
