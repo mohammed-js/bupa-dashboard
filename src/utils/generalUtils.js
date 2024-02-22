@@ -59,30 +59,26 @@ export const notCoveredText = (
 };
 
 export const convertDateFormat = (dateString) => {
-  // Split the date string into day, month, and year
-  var parts = dateString.split("-");
-
-  // Map month abbreviations to their numeric values
-  var months = {
-    jan: "01",
-    feb: "02",
-    mar: "03",
-    apr: "04",
-    may: "05",
-    jun: "06",
-    jul: "07",
-    aug: "08",
-    sep: "09",
-    oct: "10",
-    nov: "11",
-    dec: "12",
-  };
-
-  // Convert month abbreviation to numeric value
-  var month = months[parts[1].toLowerCase()];
-
-  // Return the converted date format
-  return parts[0] + "/" + month + "/" + parts[2];
+  if (dateString.includes("-")) {
+    var parts = dateString.split("-");
+    var months = {
+      jan: "01",
+      feb: "02",
+      mar: "03",
+      apr: "04",
+      may: "05",
+      jun: "06",
+      jul: "07",
+      aug: "08",
+      sep: "09",
+      oct: "10",
+      nov: "11",
+      dec: "12",
+    };
+    var month = months[parts[1].toLowerCase()];
+    return parts[0] + "/" + month + "/" + parts[2];
+  }
+  return dateString;
 };
 
 // Example usage:
