@@ -40,6 +40,7 @@ export default function Table({
       border: "none",
       paddingX: "6px",
       paddingY: "4px",
+
       backgroundColor: headerColor,
       color: "white",
       textAlign: "right",

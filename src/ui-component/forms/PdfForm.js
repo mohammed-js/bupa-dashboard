@@ -79,8 +79,10 @@ export default function PdfForm({ missing, data, setData, setStep }) {
             singleBroker.percentage === info.percentage
         );
         if (infoIndex !== -1 && infoIndex !== undefined) {
-          clonedData.customers[ci].additional_information[ii] =
-            translatedMissing.broker[infoIndex];
+          // clonedData.customers[ci].additional_information[ii] =
+          //   translatedMissing.broker[infoIndex];
+          clonedData.customers[ci].additional_information[ii].percentage =
+            translatedMissing.broker[infoIndex].percentage;
         }
       });
     });

@@ -212,7 +212,7 @@ const PdfViewer = ({ uploadedEnCertificate, data }) => {
             </a>
             <span> {lastSectionP2()}</span>
           </Box>
-          <Box sx={{ mb: "20px" }}>
+          <Box sx={{ mb: "20px", minHeight: "300px" }}>
             <Table
               certificate_number={main_info.certificate_number}
               certificate_issuance_date={main_info.certificate_issuance_date}
@@ -232,7 +232,6 @@ const PdfViewer = ({ uploadedEnCertificate, data }) => {
               }))}
             />
           </Box>
-          {/* <Box sx={{ pageBreakBefore: "always" }}></Box> */}
           {customers.map((customer) => (
             <Box sx={{ mb: "35px", breakInside: "avoid" }}>
               <Box sx={{ fontWeight: "bold", whiteSpace: "pre-line" }}>
@@ -248,18 +247,42 @@ const PdfViewer = ({ uploadedEnCertificate, data }) => {
                   )}
                 </Box>
               </Box>
-              {/* plans --------------------------------------------------------------------------- */}
+              {/*------------------------------- plans ---------------------------------- */}
               <Table
                 headerData={[
                   "الخطة التأمينية",
+                  `التحمل السنوي (${currency})`,
                   `الحد الأقصى السنوي (${currency})`,
                 ]}
                 bodyData={customer?.plans.map((item) => ({
                   a: item.plan_name,
-                  b: item.annual_maximum,
+                  b: item.annual_deductible,
+                  c: item.annual_maximum,
                 }))}
               />
-              {/* underwriting terms ------------------------------------------------------------- */}
+              {/*------------------------------- additional info (broker) ---------------------------------- */}
+              <Table
+                headerData={["معلومات إضافية", ""]}
+                bodyData={customer?.additional_information
+                  .map((item) => {
+                    return [
+                      {
+                        a: "وسيط التأمين",
+                        b: item.intermediary_name,
+                      },
+                      {
+                        a: "رقم التسجيل بالهيئة العالمة للرقابة المالية",
+                        b: item.regulator_id,
+                      },
+                      {
+                        a: "نسبة العمولة الأساسية لوسيط التأمين",
+                        b: item.percentage,
+                      },
+                    ];
+                  })
+                  .flat()}
+              />
+              {/* ------------------------------- underwriting terms ---------------------------------- */}
               {/* 1) covered + not pre-existing */}
               {customer?.underwriting_terms?.some(
                 (item) =>
@@ -358,6 +381,17 @@ const PdfViewer = ({ uploadedEnCertificate, data }) => {
                           item.applies_to
                         ),
                       }))}
+                  />
+                </>
+              )}
+              {/* no underwriting terms */}
+              {customer?.underwriting_terms?.some(
+                (item) => item == "لا يوجد"
+              ) && (
+                <>
+                  <Table
+                    headerData={["بيانات الاكتتاب"]}
+                    bodyData={[{ a: "لا يوجد" }]}
                   />
                 </>
               )}
