@@ -150,7 +150,7 @@ export default function PdfForm({ missing, data, setData, setStep }) {
         <Box>Address</Box>
       </Box>
       {/* en address */}
-      <Box className={styles.input_container_half} dir="rtl">
+      {/* <Box className={styles.input_container_half} dir="rtl">
         <input
           disabled={true}
           value={address}
@@ -158,9 +158,9 @@ export default function PdfForm({ missing, data, setData, setStep }) {
           className={`${styles.input} ${styles.bottom_margin}`}
           placeholder="اكتب المحتوى العربي ..."
         ></input>
-      </Box>
+      </Box> */}
       {/* ar address */}
-      <Box className={styles.input_container_half} dir="rtl">
+      <Box className={styles.input_container_full} dir="rtl">
         <input
           // disabled={true}
           value={translatedAddress}
