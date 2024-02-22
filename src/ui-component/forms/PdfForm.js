@@ -49,12 +49,14 @@ export default function PdfForm({ missing, data, setData, setStep }) {
     //* updated missing data
     let clonedData = { ...data };
     clonedData.main_info.address = translatedAddress;
+    console.log("before ===============");
     clonedData.customers.map((customer, ci) => {
       // let planIndex = missing.plan?.indexOf(customer.plans.plan_name);
       // if (planIndex !== -1 && planIndex !== undefined) {
       //   clonedData.customers[ci].plans.plan_name =
       //     translatedMissing.plan[planIndex];
       // }
+      console.log("xx0 ===============");
       customer.plans.map((plan, pi) => {
         let planIndex = missing.plan?.indexOf(plan.plan_name);
         // undefined => if no plans in missing
@@ -63,6 +65,7 @@ export default function PdfForm({ missing, data, setData, setStep }) {
             translatedMissing.plan[planIndex];
         }
       });
+      console.log("xx1 ===============");
       customer.underwriting_terms.map((disease, di) => {
         let diseaseIndex = missing.diseases?.indexOf(disease.name);
         // undefined => if no diseases in missing
@@ -71,7 +74,8 @@ export default function PdfForm({ missing, data, setData, setStep }) {
             translatedMissing.diseases[diseaseIndex];
         }
       });
-      customer.additional_information.map((info, ii) => {
+      console.log("xx2 ===============");
+      customer.additional_information?.map((info, ii) => {
         let infoIndex = missing.broker?.findIndex(
           (singleBroker) =>
             // singleBroker.intermediary_name === info.intermediary_name ||
@@ -86,6 +90,7 @@ export default function PdfForm({ missing, data, setData, setStep }) {
         }
       });
     });
+    console.log("after ===============");
     setData(clonedData);
     setStep(6);
     // send transaction to sohaila

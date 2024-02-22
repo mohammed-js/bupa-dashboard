@@ -261,27 +261,29 @@ const PdfViewer = ({ uploadedEnCertificate, data }) => {
                 }))}
               />
               {/*------------------------------- additional info (broker) ---------------------------------- */}
-              <Table
-                headerData={["معلومات إضافية", ""]}
-                bodyData={customer?.additional_information
-                  .map((item) => {
-                    return [
-                      {
-                        a: "وسيط التأمين",
-                        b: item.intermediary_name,
-                      },
-                      {
-                        a: "رقم التسجيل بالهيئة العالمة للرقابة المالية",
-                        b: item.regulator_id,
-                      },
-                      {
-                        a: "نسبة العمولة الأساسية لوسيط التأمين",
-                        b: item.percentage,
-                      },
-                    ];
-                  })
-                  .flat()}
-              />
+              {customer?.additional_information > 0 && (
+                <Table
+                  headerData={["معلومات إضافية", ""]}
+                  bodyData={customer?.additional_information
+                    .map((item) => {
+                      return [
+                        {
+                          a: "وسيط التأمين",
+                          b: item.intermediary_name,
+                        },
+                        {
+                          a: "رقم التسجيل بالهيئة العالمة للرقابة المالية",
+                          b: item.regulator_id,
+                        },
+                        {
+                          a: "نسبة العمولة الأساسية لوسيط التأمين",
+                          b: item.percentage,
+                        },
+                      ];
+                    })
+                    .flat()}
+                />
+              )}
               {/* ------------------------------- underwriting terms ---------------------------------- */}
               {/* title (بيانات الاكتتاب) */}
               {customer?.underwriting_terms?.some((item) => item.name) && (
