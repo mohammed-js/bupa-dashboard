@@ -18,7 +18,7 @@ export const convertToPDF = (
     html2pdf()
       .from(refSnapshot)
       .set({
-        margin: [1.5, 0.5, 0.5, 0.5],
+        margin: [1.5, 0.5, 1.5, 0.5],
         filename: "document.pdf",
         html2canvas: { scale: 5 },
         // jsPDF: { unit: "in", format: "letter", orientation: "portrait" },

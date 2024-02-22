@@ -9,7 +9,7 @@ import Box from "@mui/material/Box";
 import { useTheme } from "@mui/material/styles";
 
 export default function PdfForm({ missing, data, setData, setStep }) {
-  const address = data.main_info.address;
+  const address = data.main_info.address.replace(/,|\n/g, " - ");
   const [translatedAddress, setTranslatedAddress] = useState(address);
   const [translatedMissing, setTranslatedMissing] = useState({});
   const isDisabled = () => {

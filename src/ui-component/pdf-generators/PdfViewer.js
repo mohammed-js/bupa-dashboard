@@ -153,7 +153,8 @@ const PdfViewer = ({ uploadedEnCertificate, data }) => {
                 {customers[0].name}
               </Box>
 
-              {main_info.address.split(",").map((line, index) => (
+              {/* {main_info.address.split(",").map((line, index) => ( */}
+              {main_info.address.split(/,|\n/).map((line, index) => (
                 <Box key={index}>{line.trim()}</Box>
               ))}
             </Box>
@@ -211,7 +212,7 @@ const PdfViewer = ({ uploadedEnCertificate, data }) => {
             </a>
             <span> {lastSectionP2()}</span>
           </Box>
-          <Box sx={{ pageBreakAfter: "always" }}>
+          <Box sx={{ mb: "20px" }}>
             <Table
               certificate_number={main_info.certificate_number}
               certificate_issuance_date={main_info.certificate_issuance_date}
@@ -231,7 +232,7 @@ const PdfViewer = ({ uploadedEnCertificate, data }) => {
               }))}
             />
           </Box>
-
+          {/* <Box sx={{ pageBreakBefore: "always" }}></Box> */}
           {customers.map((customer) => (
             <Box sx={{ mb: "35px", breakInside: "avoid" }}>
               <Box sx={{ fontWeight: "bold", whiteSpace: "pre-line" }}>
@@ -243,10 +244,11 @@ const PdfViewer = ({ uploadedEnCertificate, data }) => {
                     customer.name,
                     customer.membership_number,
                     customer.date_of_birth,
-                    main_info.country
+                    customer.country
                   )}
                 </Box>
               </Box>
+              {/* plans --------------------------------------------------------------------------- */}
               <Table
                 headerData={[
                   "الخطة التأمينية",
@@ -257,6 +259,7 @@ const PdfViewer = ({ uploadedEnCertificate, data }) => {
                   b: item.annual_maximum,
                 }))}
               />
+              {/* underwriting terms ------------------------------------------------------------- */}
               {/* 1) covered + not pre-existing */}
               {customer?.underwriting_terms?.some(
                 (item) =>
