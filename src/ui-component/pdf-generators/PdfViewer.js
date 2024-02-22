@@ -191,6 +191,7 @@ const PdfViewer = ({ uploadedEnCertificate, data }) => {
           <Box
             sx={{
               whiteSpace: "pre-line",
+              mb: "10px",
             }}
           >
             {intro(
@@ -201,18 +202,7 @@ const PdfViewer = ({ uploadedEnCertificate, data }) => {
             )}
           </Box>
 
-          <Box sx={{ mt: "15px" }}>
-            <Box sx={{ fontWeight: "bold" }}>{contractInfoPrefix()}</Box>
-            <Box>{contractInfo()}</Box>
-          </Box>
-          <Box sx={{ fontWeight: "bold", whiteSpace: "pre-line", mb: "10px" }}>
-            <span>{lastSectionP1()} </span>
-            <a href="https://fra.gov.eg/" style={styles.link}>
-              /https://fra.gov.eg
-            </a>
-            <span> {lastSectionP2()}</span>
-          </Box>
-          <Box sx={{ mb: "20px", minHeight: "300px" }}>
+          <Box sx={{ mb: "20px", minHeight: "350px" }}>
             <Table
               certificate_number={main_info.certificate_number}
               certificate_issuance_date={main_info.certificate_issuance_date}
@@ -224,13 +214,20 @@ const PdfViewer = ({ uploadedEnCertificate, data }) => {
                 "النطاق الجغرافي للتغطية",
               ]}
               bodyData={customers.map((item) => ({
-                a: item.name,
+                a:
+                  item.title === "mr"
+                    ? `السيد ${item.name}`
+                    : `السيدة ${item.name}`,
                 b: item.date_of_birth,
                 c: item.cover_start,
                 d: item.cover_end,
                 e: item.area_of_cover,
               }))}
             />
+          </Box>
+          <Box sx={{ mb: "15px" }}>
+            <Box sx={{ fontWeight: "bold" }}>{contractInfoPrefix()}</Box>
+            <Box>{contractInfo()}</Box>
           </Box>
           {customers.map((customer) => (
             <Box sx={{ mb: "35px", breakInside: "avoid" }}>
@@ -251,17 +248,26 @@ const PdfViewer = ({ uploadedEnCertificate, data }) => {
               <Table
                 headerData={[
                   "الخطة التأمينية",
-                  `التحمل السنوي (${currency})`,
+                  customer?.plans[0].annual_deductible
+                    ? `التحمل السنوي (${currency})`
+                    : null,
                   `الحد الأقصى السنوي (${currency})`,
-                ]}
-                bodyData={customer?.plans.map((item) => ({
-                  a: item.plan_name,
-                  b: item.annual_deductible,
-                  c: item.annual_maximum,
-                }))}
+                ].filter((item) => item !== null)}
+                bodyData={customer?.plans.map((item) => {
+                  return item.annual_deductible
+                    ? {
+                        a: item.plan_name,
+                        b: item.annual_deductible,
+                        c: item.annual_maximum,
+                      }
+                    : {
+                        a: item.plan_name,
+                        b: item.annual_maximum,
+                      };
+                })}
               />
               {/*------------------------------- additional info (broker) ---------------------------------- */}
-              {customer?.additional_information > 0 && (
+              {customer?.additional_information?.length > 0 && (
                 <Table
                   headerData={["معلومات إضافية", ""]}
                   bodyData={customer?.additional_information
@@ -388,6 +394,13 @@ const PdfViewer = ({ uploadedEnCertificate, data }) => {
               )}
             </Box>
           ))}
+          <Box sx={{ fontWeight: "bold", whiteSpace: "pre-line", mb: "10px" }}>
+            <span>{lastSectionP1()} </span>
+            <a href="https://fra.gov.eg/" style={styles.link}>
+              /https://fra.gov.eg
+            </a>
+            <span> {lastSectionP2()}</span>
+          </Box>
         </Box>
       )}
       {lastPageContent === 2 && (
