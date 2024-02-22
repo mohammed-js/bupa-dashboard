@@ -8,11 +8,7 @@ export default function Table({
   headerColor = "#1f497d", // #5b9bd5
   bodyColor = "#e5e5e5",
   spacing = "5px",
-  headerData = [
-    "الخطة التأمينية",
-    // "التحمل السنوي (الجنية الإسترليني)",
-    // "الحد األقصى السنوي (الجنية اإلسترليني)",
-  ],
+  headerData = ["الخطة التأمينية"],
   bodyData,
 }) {
   const styles = {

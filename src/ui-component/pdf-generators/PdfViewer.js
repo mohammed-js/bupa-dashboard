@@ -154,7 +154,7 @@ const PdfViewer = ({ uploadedEnCertificate, data }) => {
               </Box>
 
               {/* {main_info.address.split(",").map((line, index) => ( */}
-              {main_info.address.split(/,|\n/).map((line, index) => (
+              {main_info.address.split(/,|-/).map((line, index) => (
                 <Box key={index}>{line.trim()}</Box>
               ))}
             </Box>
@@ -283,6 +283,19 @@ const PdfViewer = ({ uploadedEnCertificate, data }) => {
                   .flat()}
               />
               {/* ------------------------------- underwriting terms ---------------------------------- */}
+              {/* title (بيانات الاكتتاب) */}
+              {customer?.underwriting_terms?.some((item) => item.name) && (
+                <Table headerData={["بيانات الاكتتاب"]} />
+              )}
+              {/* 0) no underwriting terms */}
+              {customer?.underwriting_terms?.some(
+                (item) => item == "لا يوجد"
+              ) && (
+                <Table
+                  headerData={["بيانات الاكتتاب"]}
+                  bodyData={[{ a: "لا يوجد" }]}
+                />
+              )}
               {/* 1) covered + not pre-existing */}
               {customer?.underwriting_terms?.some(
                 (item) =>
@@ -310,20 +323,17 @@ const PdfViewer = ({ uploadedEnCertificate, data }) => {
                 (item) =>
                   item.is_covered && item.is_pre_existing && item !== "لا يوجد"
               ) && (
-                <>
-                  <Table headerData={["بيانات الاكتتاب"]} />
-                  <Table
-                    headerData={[
-                      "يتم تغطية الحالات المرضية السابقة للتعاقد التاية بموجب خطتك التأمينية:",
-                    ]}
-                    headerColor="#5b9bd5"
-                    bodyData={customer?.underwriting_terms
-                      .filter((item) => item.is_covered && item.is_pre_existing)
-                      .map((item) => ({
-                        a: item.name,
-                      }))}
-                  />
-                </>
+                <Table
+                  headerData={[
+                    "يتم تغطية الحالات المرضية السابقة للتعاقد التاية بموجب خطتك التأمينية:",
+                  ]}
+                  headerColor="#5b9bd5"
+                  bodyData={customer?.underwriting_terms
+                    .filter((item) => item.is_covered && item.is_pre_existing)
+                    .map((item) => ({
+                      a: item.name,
+                    }))}
+                />
               )}
               {/* 3) uncovered + not pre-existing */}
               {customer?.underwriting_terms?.some(
@@ -332,68 +342,47 @@ const PdfViewer = ({ uploadedEnCertificate, data }) => {
                   !item.is_pre_existing &&
                   item !== "لا يوجد"
               ) && (
-                <>
-                  <Table headerData={["بيانات الاكتتاب"]} />
-                  <Table
-                    headerData={[
-                      "لا يتم تغطية الاستثناءات الخاصة التالية بموجب خطتك التأمينية:",
-                    ]}
-                    headerColor="#5b9bd5"
-                    bodyData={customer?.underwriting_terms
-                      .filter(
-                        (item) => !item.is_covered && !item.is_pre_existing
-                      )
-                      .map((item) => ({
-                        a: notCoveredText(
-                          customer.title,
-                          customer.name,
-                          customer.cover_start,
-                          item.is_outpatient,
-                          item.name,
-                          item.applies_to
-                        ),
-                      }))}
-                  />
-                </>
+                <Table
+                  headerData={[
+                    "لا يتم تغطية الاستثناءات الخاصة التالية بموجب خطتك التأمينية:",
+                  ]}
+                  headerColor="#5b9bd5"
+                  bodyData={customer?.underwriting_terms
+                    .filter((item) => !item.is_covered && !item.is_pre_existing)
+                    .map((item) => ({
+                      a: notCoveredText(
+                        customer.title,
+                        customer.name,
+                        customer.cover_start,
+                        item.is_outpatient,
+                        item.name,
+                        item.applies_to
+                      ),
+                    }))}
+                />
               )}
               {/* 4) uncovered + pre-existing */}
               {customer?.underwriting_terms?.some(
                 (item) =>
                   !item.is_covered && item.is_pre_existing && item !== "لا يوجد"
               ) && (
-                <>
-                  <Table headerData={["بيانات الاكتتاب"]} />
-                  <Table
-                    headerData={[
-                      "لا يتم تغطية الحالات المرضية السابقة للتعاقد التالية بموجب خطتك التأمينية:",
-                    ]}
-                    headerColor="#5b9bd5"
-                    bodyData={customer?.underwriting_terms
-                      .filter(
-                        (item) => !item.is_covered && item.is_pre_existing
-                      )
-                      .map((item) => ({
-                        a: notCoveredText(
-                          customer.title,
-                          customer.name,
-                          customer.cover_start,
-                          item.name,
-                          item.applies_to
-                        ),
-                      }))}
-                  />
-                </>
-              )}
-              {/* no underwriting terms */}
-              {customer?.underwriting_terms?.some(
-                (item) => item == "لا يوجد"
-              ) && (
-                <>
-                  <Table
-                    headerData={["بيانات الاكتتاب"]}
-                    bodyData={[{ a: "لا يوجد" }]}
-                  />
-                </>
+                <Table
+                  headerData={[
+                    "لا يتم تغطية الحالات المرضية السابقة للتعاقد التالية بموجب خطتك التأمينية:",
+                  ]}
+                  headerColor="#5b9bd5"
+                  bodyData={customer?.underwriting_terms
+                    .filter((item) => !item.is_covered && item.is_pre_existing)
+                    .map((item) => ({
+                      a: notCoveredText(
+                        customer.title,
+                        customer.name,
+                        customer.cover_start,
+                        item.name,
+                        item.applies_to
+                      ),
+                    }))}
+                />
               )}
             </Box>
           ))}
