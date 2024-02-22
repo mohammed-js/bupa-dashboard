@@ -13,6 +13,7 @@ import {
   lastSectionP1,
   lastSectionP2,
   notCoveredText,
+  convertDateFormat,
 } from "../../utils/generalUtils.js";
 import { notifySuccess, notifyError } from "../../utils/toastify.js";
 import { convertToPDF } from "../../utils/pdf-generators.js";
@@ -361,7 +362,7 @@ const PdfViewer = ({ uploadedEnCertificate, data }) => {
                       a: notCoveredText(
                         customer.title,
                         customer.name,
-                        customer.cover_start,
+                        convertDateFormat(item.date),
                         item.is_outpatient,
                         item.name,
                         item.applies_to

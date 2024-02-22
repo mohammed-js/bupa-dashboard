@@ -57,3 +57,35 @@ export const notCoveredText = (
   تفاصيل الحالة المرضية السابقة للتعاقد المستثناه من التغطية : ${intro} ${disease} ${titleGenerator}/ ${name} و ذلك اعتبارا من ${cover_start} ${tailGenerator}
   `;
 };
+
+export const convertDateFormat = (dateString) => {
+  // Split the date string into day, month, and year
+  var parts = dateString.split("-");
+
+  // Map month abbreviations to their numeric values
+  var months = {
+    jan: "01",
+    feb: "02",
+    mar: "03",
+    apr: "04",
+    may: "05",
+    jun: "06",
+    jul: "07",
+    aug: "08",
+    sep: "09",
+    oct: "10",
+    nov: "11",
+    dec: "12",
+  };
+
+  // Convert month abbreviation to numeric value
+  var month = months[parts[1].toLowerCase()];
+
+  // Return the converted date format
+  return parts[0] + "/" + month + "/" + parts[2];
+};
+
+// Example usage:
+var inputDate = "01-jan-2022";
+var convertedDate = convertDateFormat(inputDate);
+console.log(convertedDate); // Output: 01/01/2022
