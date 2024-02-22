@@ -64,6 +64,7 @@ a:hover {
 }
 
 body {
+  font-family: "Arial", sans-serif !important;
 }
 
 .hide_scrollbar::-webkit-scrollbar {

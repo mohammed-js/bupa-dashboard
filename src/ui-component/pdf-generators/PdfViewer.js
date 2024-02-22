@@ -126,9 +126,10 @@ const PdfViewer = ({ uploadedEnCertificate, data }) => {
       {/* html content ----------------------------------------------------------------------------------------------- */}
       {lastPageContent === 1 && (
         <Box
+          style={{ fontFamily: "Arial, sans-serif" }}
           ref={contentRef}
           dir="rtl"
-          sx={{ lineHeight: "1.3", color: "#000", fontFamily: "Arial" }}
+          sx={{ lineHeight: "1.3", color: "#000" }}
         >
           {/* 1st page */}
           <Box>الشهادة: {main_info.certificate_number}</Box>
