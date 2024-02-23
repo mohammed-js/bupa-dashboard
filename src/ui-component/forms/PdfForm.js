@@ -331,7 +331,7 @@ export default function PdfForm({ missing, data, setData, setStep }) {
                 setTranslatedMissing(cloneTranslatedMissing);
               }}
               id="brokerPercentage"
-              type="string"
+              type="number"
               className={`${styles.input} ${styles.bottom_margin}`}
               placeholder="enter percentage ..."
             ></input>
