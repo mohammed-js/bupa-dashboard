@@ -199,7 +199,8 @@ const PdfViewer = ({ uploadedEnCertificate, data }) => {
               customers[0]?.title === "mr" ? "السيد" : "السيدة",
               customers[0]?.name,
               customers[0]?.plans?.[0].annual_maximum,
-              currency
+              currency,
+              customers.filter((customer) => customer.is_main).area_of_cover
             )}
           </Box>
 
