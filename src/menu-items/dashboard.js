@@ -5,6 +5,7 @@ import {
   IconLanguage,
   IconMessageChatbot,
   IconUsers,
+  IconHistory,
 } from "@tabler/icons-react";
 
 // constant
@@ -14,6 +15,7 @@ const icons = {
   IconLanguage,
   IconMessageChatbot,
   IconUsers,
+  IconHistory,
 };
 
 // ==============================|| DASHBOARD MENU ITEMS ||============================== //
@@ -45,6 +47,14 @@ const dashboard = {
       type: "item",
       url: "/translate_certificate",
       icon: icons.IconLanguage,
+      breadcrumbs: false,
+    },
+    {
+      id: "history",
+      title: "History",
+      type: "item",
+      url: "/history",
+      icon: icons.IconHistory,
       breadcrumbs: false,
     },
     {

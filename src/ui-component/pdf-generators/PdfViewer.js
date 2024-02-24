@@ -200,7 +200,7 @@ const PdfViewer = ({ uploadedEnCertificate, data }) => {
               customers[0]?.name,
               customers[0]?.plans?.[0].annual_maximum,
               currency,
-              customers.filter((customer) => customer.is_main).area_of_cover
+              customers.filter((customer) => customer.is_main)[0].area_of_cover
             )}
           </Box>
 
@@ -218,8 +218,8 @@ const PdfViewer = ({ uploadedEnCertificate, data }) => {
               bodyData={customers.map((item) => ({
                 a:
                   item.title === "mr"
-                    ? `السيد ${item.name}`
-                    : `السيدة ${item.name}`,
+                    ? `السيد/ ${item.name}`
+                    : `السيدة/ ${item.name}`,
                 b: item.date_of_birth,
                 c: item.cover_start,
                 d: item.cover_end,

@@ -12,6 +12,7 @@ const TranslateCertificate = Loadable(
 // sample page routing
 const Statistics = Loadable(lazy(() => import("../views/Statistics")));
 const Members = Loadable(lazy(() => import("../views/Members")));
+const History = Loadable(lazy(() => import("../views/History")));
 const Settings = Loadable(lazy(() => import("../views/Settings")));
 const Support = Loadable(lazy(() => import("../views/Support")));
 
@@ -36,6 +37,10 @@ const MainRoutes = {
     {
       path: "translate_certificate",
       element: <TranslateCertificate />,
+    },
+    {
+      path: "history",
+      element: <History />,
     },
     {
       path: "settings",
