@@ -2,6 +2,8 @@ import { notifySuccess, notifyError } from "./toastify";
 import html2pdf from "html2pdf.js";
 import axios from "axios";
 import { baseUrl } from "../views/utilities/general";
+import logo from "../assets/images/bupa/logo.jpg";
+import footer from "../assets/images/bupa/footer.jpg";
 export const convertToPDF = (
   content,
   option,
@@ -44,8 +46,10 @@ export const convertToPDF = (
           );
           //^ add header logo
           pdf.addImage(
-            "https://iili.io/J1pp1Wu.jpg",
-            "JPEG",
+            logo,
+            "JPG",
+            // "https://iili.io/J1pp1Wu.jpg",
+            // "JPEG",
             pdf.internal.pageSize.getWidth() / 2 + 2.75,
             pdf.internal.pageSize.getHeight() / 2 - 5.5,
             1,
@@ -54,8 +58,10 @@ export const convertToPDF = (
 
           //^ add footer (as image)
           pdf.addImage(
-            "https://iili.io/J1p1FP1.jpg",
-            "JPEG",
+            footer,
+            "JPG",
+            // "https://iili.io/J1p1FP1.jpg",
+            // "JPEG",
             pdf.internal.pageSize.getWidth() / 2 - 3.8,
             pdf.internal.pageSize.getHeight() / 2 + 4.5,
             7.6,
