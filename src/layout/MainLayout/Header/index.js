@@ -68,7 +68,7 @@ const Header = ({ handleLeftDrawerToggle }) => {
       <Box sx={{ flexGrow: 1 }} />
 
       {/* notification & profile */}
-      <NotificationSection />
+      {/* <NotificationSection /> */}
       <ProfileSection />
       {/* <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', position: 'absolute', bottom: '30px' }}> */}
       {/* <Button variant="contained" endIcon={<LogoutIcon />} sx={{ m: 'auto' }}>

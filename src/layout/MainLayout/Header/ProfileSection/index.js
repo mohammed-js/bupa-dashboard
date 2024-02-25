@@ -79,7 +79,7 @@ const ProfileSection = () => {
     }
   };
   const handleToggle = () => {
-    setOpen((prevOpen) => !prevOpen);
+    // setOpen((prevOpen) => !prevOpen);
   };
 
   const prevOpen = useRef(open);
@@ -147,6 +147,7 @@ const ProfileSection = () => {
         aria-controls={open ? "menu-list-grow" : undefined}
         aria-haspopup="true"
         color="inherit"
+        style={{ cursor: "initial" }}
         onClick={handleToggle}
       />
       <Popper
