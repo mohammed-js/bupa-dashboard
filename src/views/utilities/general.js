@@ -23,7 +23,7 @@ export const uploadDocuments = (certificate, idImages, setData, setStep) => {
       }
     )
     .then((res) => {
-      setData(res.data.data);
+      setData(res.data);
       setStep(5);
       //   setLoading(false);
     })

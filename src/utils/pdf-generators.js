@@ -1,12 +1,15 @@
 import { notifySuccess, notifyError } from "./toastify";
 import html2pdf from "html2pdf.js";
-
+import axios from "axios";
+import { baseUrl } from "../views/utilities/general";
 export const convertToPDF = (
   content,
   option,
   setTranslatedArCertificate,
   refSnapshot,
-  setRefSnapshot
+  setRefSnapshot,
+  uploadedEnCertificateId,
+  setUploading
 ) => {
   if (option === 1) {
     setRefSnapshot(content);
@@ -20,7 +23,7 @@ export const convertToPDF = (
       .set({
         margin: [1.5, 0.5, 1.5, 0.5],
         filename: "document.pdf",
-        html2canvas: { scale: 5 },
+        html2canvas: { scale: 2 },
         // jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
         jsPDF: { unit: "in", format: "a4", orientation: "portrait" },
       })
@@ -72,6 +75,36 @@ export const convertToPDF = (
         if (option === 4) {
           // save pdf to pc
           pdf.save("document.pdf");
+        }
+        if (option === 5) {
+          // var blob = pdf.output("blob");
+          // var file = new File([blob], "document.pdf", {
+          //   type: "application/pdf",
+          // });
+
+          // update certificate
+          var pdfData = pdf.output("blob");
+          axios
+            .patch(
+              `${baseUrl}/documents/${uploadedEnCertificateId}`,
+              {
+                certificate_arabic: pdfData,
+              },
+              {
+                headers: {
+                  "Content-Type": "multipart/form-data",
+                  Authorization: `Bearer ${localStorage.getItem("acc-token")}`,
+                },
+              }
+            )
+            .then((res) => {
+              notifySuccess("Uploaded successfully!");
+              setUploading(false);
+            })
+            .catch((err) => {
+              notifyError("Error when uploading!");
+              setUploading(false);
+            });
         }
         return pdf;
       })

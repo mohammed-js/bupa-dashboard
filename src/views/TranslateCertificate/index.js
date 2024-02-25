@@ -25,9 +25,8 @@ import { missingsExtractor } from "../../views/utilities/general";
 const Dashboard = () => {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState({}); // all data
-  console.log(data);
   // gonne be overriten via editable fields
-  let { missing = [], main_info = {}, customers = [] } = data || {}; //check all customers, whose disease (underwriting terms) | plan | .. is included
+  let { missing = [], main_info = {}, customers = [] } = data?.data || {}; //check all customers, whose disease (underwriting terms) | plan | .. is included
 
   const [certificate, setCertificate] = useState({});
   const [idImages, setIdImages] = useState([]);

@@ -17,13 +17,15 @@ import {
 } from "../../utils/generalUtils.js";
 import { notifySuccess, notifyError } from "../../utils/toastify.js";
 import { convertToPDF } from "../../utils/pdf-generators.js";
-
+import CircularProgress from "@mui/material/CircularProgress";
 import Table from "./Table.js";
 const PdfViewer = ({ uploadedEnCertificate, data }) => {
+  const [uploading, setUploading] = useState(false);
   // * data extraction
-  const main_info = data.main_info;
+  const certificatedId = data.id;
+  const main_info = data.data.main_info;
   const currency = main_info.annual_maximum_currency;
-  const customers = data.customers;
+  const customers = data.data.customers;
   // ------------
   const [lastPageContent, setLastPageContent] = useState(1);
   // uploadedEnCertificate url
@@ -119,6 +121,35 @@ const PdfViewer = ({ uploadedEnCertificate, data }) => {
           }}
         >
           Download Arabic Certificate
+        </Button>
+        <Button
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            fontSize: { xs: "10px", sm: "14px" },
+            p: { xs: "0", sm: "5px" },
+            pointerEvents: uploading ? "none" : "initial",
+          }}
+          variant="outlined"
+          onClick={() => {
+            setUploading(true);
+            convertToPDF(
+              contentRef.current,
+              5,
+              setTranslatedArCertificate,
+              refSnapshot,
+              setRefSnapshot,
+              certificatedId,
+              setUploading
+            );
+          }}
+        >
+          {uploading ? (
+            <CircularProgress sx={{ fontSize: "10px" }} size="15px" />
+          ) : (
+            "Upload Arabic Certificate To Database"
+          )}
         </Button>
       </Box>
       {/* <a href={translatedArCertificate} target="_blank">
