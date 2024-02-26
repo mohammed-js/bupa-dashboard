@@ -27,7 +27,7 @@ export const tableDescription = (
   birthDate,
   country
 ) => ` ${name} ، رقم عضوية/ ${membershipNumber}
-    تاريخ الميلاد ${birthDate} ، محل الإقامة/${country}`;
+    تاريخ الميلاد ${birthDate} ، محل الإقامة/ ${country}`;
 
 export const contractInfoPrefix = () => `معلومات العقد`;
 export const contractInfo = () =>

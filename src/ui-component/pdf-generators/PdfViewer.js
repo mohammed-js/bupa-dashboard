@@ -19,7 +19,7 @@ import { notifySuccess, notifyError } from "../../utils/toastify.js";
 import { convertToPDF } from "../../utils/pdf-generators.js";
 import CircularProgress from "@mui/material/CircularProgress";
 import Table from "./Table.js";
-const PdfViewer = ({ uploadedEnCertificate, data }) => {
+const PdfViewer = ({ uploadedEnCertificate, data, setStep, setData }) => {
   const [uploading, setUploading] = useState(false);
   // * data extraction
   const certificatedId = data.id;
@@ -151,6 +151,24 @@ const PdfViewer = ({ uploadedEnCertificate, data }) => {
             "Upload Arabic Certificate To Database"
           )}
         </Button>
+        <Button
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            fontSize: { xs: "10px", sm: "14px" },
+            p: { xs: "0", sm: "5px" },
+            color: "#fff",
+          }}
+          variant="contained"
+          color="success"
+          onClick={() => {
+            setData({});
+            setStep(1);
+          }}
+        >
+          Translate Another Certificate
+        </Button>
       </Box>
       {/* <a href={translatedArCertificate} target="_blank">
         open in a new tab
@@ -200,7 +218,7 @@ const PdfViewer = ({ uploadedEnCertificate, data }) => {
               <Box sx={{ fontWeight: "bold" }}>بوبا إيجيبت للتأمين</Box>
               <Box sx={{}}>مبنى رقم /٣ب،١ قطعة ،٣٣ ميفيدا بيزنس بارك،</Box>
               <Box sx={{}}>التجمع الخامس،</Box>
-              <Box sx={{}}>رقم بريدي ،١١٨٣٥</Box>
+              <Box sx={{}}>رقم بريدي ١١٨٣٥،</Box>
               <Box sx={{}}>القاهرة الجديدة، مصر</Box>
               <Box sx={{}}>{phone}</Box>
               <Box sx={{}}>{phax}</Box>

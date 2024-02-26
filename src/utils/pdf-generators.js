@@ -80,7 +80,8 @@ export const convertToPDF = (
         }
         if (option === 4) {
           // save pdf to pc
-          pdf.save("document.pdf");
+          // pdf.save("document.pdf");
+          pdf.save(`${localStorage.getItem("certificate")}.pdf`);
         }
         if (option === 5) {
           // var blob = pdf.output("blob");

@@ -21,7 +21,10 @@ import idSampleSection from "../../assets/images/bupa/id-sample-section.svg";
 import right from "../../assets/images/bupa/right.svg";
 import back from "../../assets/images/bupa/back.png";
 // ==============================|| DEFAULT DASHBOARD ||============================== //
-import { missingsExtractor } from "../../views/utilities/general";
+import {
+  missingsExtractor,
+  replaceEnglishWithArabic,
+} from "../../views/utilities/general";
 const Dashboard = () => {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState({}); // all data
@@ -186,6 +189,10 @@ const Dashboard = () => {
                 component="input"
                 onChange={(e) => {
                   setCertificate(e.target.files[0]);
+                  localStorage.setItem(
+                    "certificate",
+                    replaceEnglishWithArabic(e.target.files[0].name)
+                  );
                 }}
                 id="file-input"
                 type="file"
@@ -333,7 +340,12 @@ const Dashboard = () => {
               gap: "30px",
             }}
           >
-            <PdfViewer uploadedEnCertificate={certificate} data={data} />
+            <PdfViewer
+              uploadedEnCertificate={certificate}
+              data={data}
+              setStep={setStep}
+              setData={setData}
+            />
           </Box>
         )}
       </Box>

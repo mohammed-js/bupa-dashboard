@@ -179,7 +179,7 @@ const PdfViewer = ({ uploadedEnCertificate }) => {
               <Box sx={{ fontWeight: "bold" }}>بوبا إيجيبت للتأمين</Box>
               <Box sx={{}}>مبنى رقم /٣ب،١ قطعة ،٣٣ ميفيدا بيزنس بارك،</Box>
               <Box sx={{}}>التجمع الخامس،</Box>
-              <Box sx={{}}>رقم بريدي ،١١٨٣٥</Box>
+              <Box sx={{}}>رقم بريدي ١١٨٣٥،</Box>
               <Box sx={{}}>القاهرة الجديدة، مصر</Box>
               <Box sx={{}}>{`هاتف: ${phone}`}</Box>
               <Box sx={{}}>{`فاكس: ${phax}`}</Box>

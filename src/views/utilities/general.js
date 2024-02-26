@@ -90,3 +90,22 @@ export const missingsExtractor = (missing, customers) => {
   });
   return missingDataOwners;
 };
+
+export const replaceEnglishWithArabic = (sentence) => {
+  // Define English to Arabic mapping
+  const englishArabicMapping = {
+    ENGLISH: "ARABIC",
+    ".PDF": "",
+  };
+
+  // Iterate through the mapping and perform replacements
+  for (let [english, arabic] of Object.entries(englishArabicMapping)) {
+    let regex = new RegExp(english.toLowerCase(), "gi");
+    sentence = sentence.replace(regex, arabic);
+  }
+
+  // Trim ".pdf" if present
+  sentence = sentence.replace(/\.pdf/gi, "").replace(/\.PDF/gi, "");
+
+  return sentence;
+};
