@@ -128,9 +128,13 @@ const History = () => {
                     </StyledTableCell>
 
                     <StyledTableCell align="left">
-                      <a href={user.certificate_arabic} target="_blank">
-                        ar certificate
-                      </a>
+                      {user.certificate_arabic ? (
+                        <a href={user.certificate_arabic} target="_blank">
+                          ar certificate
+                        </a>
+                      ) : (
+                        "-"
+                      )}
                     </StyledTableCell>
                   </StyledTableRow>
                 ))}
