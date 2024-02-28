@@ -25,6 +25,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import DirectionsIcon from "@mui/icons-material/Directions";
 import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -69,26 +70,30 @@ const style = {
 const Database = () => {
   const [data, setData] = useState({});
   const [currentItem, setCurrentItem] = useState({});
+  // const [type, setType] = useState("add");
   const [endpoint, setEndpoint] = useState("plan");
   const [page, setPage] = useState(1);
-  const [nameQuery, setNameQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
   // const [idQuery, setIdQuery] = useState("");
+  const searchKey = endpoint !== "broker" ? "search" : "name";
   const queryBuilder = `?${page ? `page=${page}` : ""}${
-    nameQuery ? `&name=${nameQuery}` : ""
+    searchQuery ? `&${searchKey}=${searchQuery}` : ""
   }`;
   const handleChange = (event) => {
     setData({});
     setEndpoint(event.target.value);
-    setNameQuery("");
+    setSearchQuery("");
   };
   const [forceUpdate, setForceUpdate] = useState(false);
   const [open, setOpen] = useState(false);
   const handleOpen = (item) => {
     setOpen(true);
-    setCurrentItem(item);
-    console.log(item);
+    item?.name && setCurrentItem(item);
   };
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setOpen(false);
+    setCurrentItem({});
+  };
   console.log(data);
   useEffect(() => {
     // setData({});
@@ -123,7 +128,7 @@ const Database = () => {
       body = {
         name: en_name,
         regulator_id: +regulator_id,
-        percentage: +percentage,
+        percentage: +percentage + "%",
       };
     }
 
@@ -133,10 +138,14 @@ const Database = () => {
           Authorization: `Bearer ${localStorage.getItem("acc-token")}`,
         },
       })
-      .then((res) => setForceUpdate((prev) => !prev))
+      .then((res) => {
+        setForceUpdate((prev) => !prev);
+        setCurrentItem({});
+      })
       .catch((err) => {
         notifyError("Something went wrong!");
         setForceUpdate((prev) => !prev);
+        setCurrentItem({});
       });
   };
   return (
@@ -151,12 +160,12 @@ const Database = () => {
           <Box
             sx={{ textAlign: "center", fontWeight: "bold", fontSize: "20px" }}
           >
-            Update {endpoint}
+            {currentItem?.name ? "Update" : "Add"} {endpoint}
           </Box>
           <TextField
             label="English Name"
             id="en_name"
-            defaultValue={currentItem.name}
+            defaultValue={currentItem?.name ? currentItem.name : ""}
             size="small"
             required
           />
@@ -164,7 +173,7 @@ const Database = () => {
             <TextField
               label="Arabic Name"
               id="ar_name"
-              defaultValue={currentItem.translate}
+              defaultValue={currentItem?.translate ? currentItem.translate : ""}
               size="small"
               required
             />
@@ -174,22 +183,33 @@ const Database = () => {
               <TextField
                 label="Regulator ID"
                 id="regulator_id"
-                defaultValue={currentItem.regulator_id}
+                defaultValue={
+                  currentItem?.regulator_id ? currentItem.regulator_id : ""
+                }
                 size="small"
                 required
               />
               <TextField
                 label="Percentage"
                 id="percentage"
-                defaultValue={currentItem.percentage.replace(/%/g, "")}
+                defaultValue={
+                  currentItem?.percentage
+                    ? currentItem.percentage.replace(/%/g, "")
+                    : ""
+                }
                 size="small"
                 type="number"
                 required
               />
             </>
           )}
-          <Button type="submit" variant="contained">
-            Update
+          <Button
+            type="submit"
+            variant="contained"
+            color={currentItem?.name ? "primary" : "success"}
+            sx={{ color: "#fff" }}
+          >
+            {currentItem?.name ? "Update" : "Add"}
           </Button>
         </Box>
       </Modal>
@@ -228,50 +248,67 @@ const Database = () => {
           mb: "10px",
         }}
       />
-      <Paper
-        component="form"
+      <Box
         sx={{
-          p: "2px 4px",
           display: "flex",
           alignItems: "center",
-          width: 300,
-          height: 40,
-          boxShadow:
-            "rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px",
-          borderRadius: "3px",
-          mb: "10px",
+          justifyContent: "space-between",
         }}
       >
-        <InputBase
+        <Paper
+          component="form"
           sx={{
-            ml: 1,
-            flex: 1,
-            border: "none !important",
-            outline: "none !important",
-            "& :focus": {
+            p: "2px 4px",
+            display: "flex",
+            alignItems: "center",
+            width: 300,
+            height: 40,
+            boxShadow:
+              "rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px",
+            borderRadius: "3px",
+            mb: "10px",
+          }}
+        >
+          <InputBase
+            sx={{
+              ml: 1,
+              flex: 1,
               border: "none !important",
               outline: "none !important",
-            },
-          }}
-          placeholder="Search by name..."
-          inputProps={{ "aria-label": "search google maps" }}
-          onChange={(e) => {
-            setNameQuery(e.target.value);
+              "& :focus": {
+                border: "none !important",
+                outline: "none !important",
+              },
+            }}
+            placeholder="Search by name..."
+            inputProps={{ "aria-label": "search google maps" }}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
 
-            if (e.target.value === "") {
-              setForceUpdate((prev) => !prev);
-            }
-          }}
-          value={nameQuery}
-        />
-        <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
-          <SearchIcon
+              if (e.target.value === "") {
+                setForceUpdate((prev) => !prev);
+              }
+            }}
+            value={searchQuery}
+          />
+          <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
+            <SearchIcon
+              onClick={() => {
+                setForceUpdate((prev) => !prev);
+              }}
+            />
+          </IconButton>
+        </Paper>
+        <IconButton color="primary" aria-label="add to shopping cart">
+          <AddCircleIcon
+            color="success"
+            sx={{ fontSize: 30 }}
             onClick={() => {
-              setForceUpdate((prev) => !prev);
+              handleOpen();
             }}
           />
         </IconButton>
-      </Paper>
+      </Box>
       {!data?.results && (
         <Box
           sx={{
