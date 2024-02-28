@@ -20,11 +20,14 @@ import Select from "@mui/material/Select";
 import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
 import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import DirectionsIcon from "@mui/icons-material/Directions";
-
+import IconButton from "@mui/material/IconButton";
+import EditIcon from "@mui/icons-material/Edit";
+import Modal from "@mui/material/Modal";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 // ==============================|| SAMPLE PAGE ||============================== //
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -46,22 +49,51 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     border: 0,
   },
 }));
-
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+  outline: "none",
+  border: "none",
+  borderRadius: "5px",
+  display: "flex",
+  flexDirection: "column",
+  gap: "15px",
+};
 const Database = () => {
-  const [age, setAge] = useState("");
-  const [endpoint, setEndpoint] = useState("documents");
-
-  const handleChange = (event) => {
-    setEndpoint(event.target.value);
-  };
   const [data, setData] = useState({});
+  const [currentItem, setCurrentItem] = useState({});
+  const [endpoint, setEndpoint] = useState("plan");
   const [page, setPage] = useState(1);
+  const [nameQuery, setNameQuery] = useState("");
+  // const [idQuery, setIdQuery] = useState("");
+  const queryBuilder = `?${page ? `page=${page}` : ""}${
+    nameQuery ? `&name=${nameQuery}` : ""
+  }`;
+  const handleChange = (event) => {
+    setData({});
+    setEndpoint(event.target.value);
+    setNameQuery("");
+  };
   const [forceUpdate, setForceUpdate] = useState(false);
+  const [open, setOpen] = useState(false);
+  const handleOpen = (item) => {
+    setOpen(true);
+    setCurrentItem(item);
+    console.log(item);
+  };
+  const handleClose = () => setOpen(false);
   console.log(data);
   useEffect(() => {
     // setData({});
     axios
-      .get(`${baseUrl}/${endpoint}/?page=${page}`, {
+      .get(`${baseUrl}/translator/${endpoint}/${queryBuilder}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("acc-token")}`,
         },
@@ -69,9 +101,98 @@ const Database = () => {
       .then((res) => setData(res.data))
       .catch((err) => notifyError("Something went wrong!"));
   }, [endpoint, page, forceUpdate]);
+  const update = (event) => {
+    event.preventDefault();
+    console.log(event.target);
+    const form = event.target;
+    setOpen(false);
+    setData({});
+    // -----
+    const en_name = form?.elements["en_name"]?.value;
+    const ar_name = form?.elements["ar_name"]?.value;
+    const regulator_id = form?.elements["regulator_id"]?.value;
+    const percentage = form?.elements["percentage"]?.value;
+    // -----
+    let body;
+    if (endpoint !== "broker") {
+      body = {
+        name: en_name,
+        translate: ar_name,
+      };
+    } else {
+      body = {
+        name: en_name,
+        regulator_id: +regulator_id,
+        percentage: +percentage,
+      };
+    }
 
+    axios
+      .post(`${baseUrl}/translator/${endpoint}/`, body, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("acc-token")}`,
+        },
+      })
+      .then((res) => setForceUpdate((prev) => !prev))
+      .catch((err) => {
+        notifyError("Something went wrong!");
+        setForceUpdate((prev) => !prev);
+      });
+  };
   return (
     <>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box component="form" sx={style} onSubmit={update}>
+          <Box
+            sx={{ textAlign: "center", fontWeight: "bold", fontSize: "20px" }}
+          >
+            Update {endpoint}
+          </Box>
+          <TextField
+            label="English Name"
+            id="en_name"
+            defaultValue={currentItem.name}
+            size="small"
+            required
+          />
+          {endpoint !== "broker" && (
+            <TextField
+              label="Arabic Name"
+              id="ar_name"
+              defaultValue={currentItem.translate}
+              size="small"
+              required
+            />
+          )}
+          {endpoint === "broker" && (
+            <>
+              <TextField
+                label="Regulator ID"
+                id="regulator_id"
+                defaultValue={currentItem.regulator_id}
+                size="small"
+                required
+              />
+              <TextField
+                label="Percentage"
+                id="percentage"
+                defaultValue={currentItem.percentage.replace(/%/g, "")}
+                size="small"
+                type="number"
+                required
+              />
+            </>
+          )}
+          <Button type="submit" variant="contained">
+            Update
+          </Button>
+        </Box>
+      </Modal>
       <FormControl
         sx={{ mb: "10px", minWidth: 120, borderRadius: "8px !important" }}
         size="small"
@@ -91,9 +212,10 @@ const Database = () => {
           label="Type"
           onChange={handleChange}
         >
-          <MenuItem value="documents">Documents</MenuItem>
-          <MenuItem value="documents2">Documents2</MenuItem>
-          <MenuItem value="documents3">Documents3</MenuItem>
+          <MenuItem value="plan">Plans</MenuItem>
+          <MenuItem value="currency">Currency</MenuItem>
+          <MenuItem value="disease">Disease</MenuItem>
+          <MenuItem value="broker">Broker</MenuItem>
         </Select>
       </FormControl>
       <Pagination
@@ -133,9 +255,21 @@ const Database = () => {
           }}
           placeholder="Search by name..."
           inputProps={{ "aria-label": "search google maps" }}
+          onChange={(e) => {
+            setNameQuery(e.target.value);
+
+            if (e.target.value === "") {
+              setForceUpdate((prev) => !prev);
+            }
+          }}
+          value={nameQuery}
         />
         <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
-          <SearchIcon />
+          <SearchIcon
+            onClick={() => {
+              setForceUpdate((prev) => !prev);
+            }}
+          />
         </IconButton>
       </Paper>
       {!data?.results && (
@@ -163,53 +297,51 @@ const Database = () => {
             <Table sx={{ minWidth: 700 }} aria-label="customized table">
               <TableHead>
                 <TableRow>
-                  <StyledTableCell align="left">Name</StyledTableCell>
-                  <StyledTableCell align="left">Email</StyledTableCell>
-                  <StyledTableCell align="left">Phone Number</StyledTableCell>
-                  <StyledTableCell align="left">
-                    English Certificate
-                  </StyledTableCell>
-                  <StyledTableCell align="left">National IDs</StyledTableCell>
-                  <StyledTableCell align="left">
-                    Arabic (Translated) Certificate
-                  </StyledTableCell>
+                  <StyledTableCell align="left">En</StyledTableCell>
+                  {endpoint !== "broker" && (
+                    <StyledTableCell align="left">Ar</StyledTableCell>
+                  )}
+                  {endpoint === "broker" && (
+                    <>
+                      <StyledTableCell align="left">
+                        Regulator ID
+                      </StyledTableCell>
+                      <StyledTableCell align="left">Percentage</StyledTableCell>
+                    </>
+                  )}
+                  <StyledTableCell align="right">Edit</StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {data.results.map((user, i) => (
-                  <StyledTableRow key={user.id + Math.random()}>
-                    <StyledTableCell align="left">{`${user.uploaded_by.first_name} ${user.uploaded_by.last_name}`}</StyledTableCell>
-                    <StyledTableCell align="left">
-                      {user.uploaded_by.email}
-                    </StyledTableCell>
-                    <StyledTableCell align="left">
-                      {user.uploaded_by.phone_number}
-                    </StyledTableCell>
-                    <StyledTableCell align="left">
-                      <a href={user.certificate} target="_blank">
-                        en certificate
-                      </a>
-                    </StyledTableCell>
-                    <StyledTableCell align="left">
-                      {user.national_ids.map((id, i) => (
-                        <a
-                          href={id.image}
-                          target="_blank"
-                          style={{ display: "block" }}
-                        >
-                          ID {i + 1}
-                        </a>
-                      ))}
-                    </StyledTableCell>
-
-                    <StyledTableCell align="left">
-                      {user.certificate_arabic ? (
-                        <a href={user.certificate_arabic} target="_blank">
-                          ar certificate
-                        </a>
-                      ) : (
-                        "-"
-                      )}
+                {data.results.map((item, i) => (
+                  <StyledTableRow key={item.id + Math.random()}>
+                    <StyledTableCell align="left">{item.name} </StyledTableCell>
+                    {endpoint !== "broker" && (
+                      <StyledTableCell align="left">
+                        {item.translate}
+                      </StyledTableCell>
+                    )}
+                    {endpoint === "broker" && (
+                      <>
+                        <StyledTableCell align="left">
+                          {item.regulator_id}
+                        </StyledTableCell>
+                        <StyledTableCell align="left">
+                          {item.percentage ? item.percentage : "-"}
+                        </StyledTableCell>
+                      </>
+                    )}
+                    <StyledTableCell align="right">
+                      <IconButton
+                        color="primary"
+                        aria-label="add to shopping cart"
+                      >
+                        <EditIcon
+                          onClick={() => {
+                            handleOpen(item);
+                          }}
+                        />
+                      </IconButton>
                     </StyledTableCell>
                   </StyledTableRow>
                 ))}
