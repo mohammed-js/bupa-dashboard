@@ -29,6 +29,7 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import { arNumToEnNum } from "../utilities/general";
 // ==============================|| SAMPLE PAGE ||============================== //
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -70,6 +71,7 @@ const style = {
 const Database = () => {
   const [data, setData] = useState({});
   const [currentItem, setCurrentItem] = useState({});
+  console.log("sssssssss", currentItem);
   // const [type, setType] = useState("add");
   const [endpoint, setEndpoint] = useState("plan");
   const [page, setPage] = useState(1);
@@ -128,7 +130,7 @@ const Database = () => {
       body = {
         name: en_name,
         regulator_id: +regulator_id,
-        percentage: +percentage + "%",
+        percentage: percentage + "%",
       };
     }
 
@@ -197,8 +199,22 @@ const Database = () => {
                     ? currentItem.percentage.replace(/%/g, "")
                     : ""
                 }
-                size="small"
-                type="number"
+                onInput={(e) => {
+                  const input = e.target;
+                  // Regular expression to allow only numerical characters
+                  var regex = /^[0-9]*$/;
+
+                  // Get the input value
+                  var value = input.value;
+
+                  // Check if the value matches the regex
+                  if (!regex.test(value)) {
+                    // If not, remove non-numerical characters
+                    input.value = value.replace(/\D/g, "");
+                  }
+                }}
+                size="number"
+                type="string"
                 required
               />
             </>

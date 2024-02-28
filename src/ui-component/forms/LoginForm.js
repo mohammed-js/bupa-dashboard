@@ -51,7 +51,7 @@ export default function LoginForm() {
 
   return (
     <form
-      className={styles.container}
+      className={`${styles.container} pick`}
       onSubmit={handleSubmit}
       style={{
         overflow: "auto",

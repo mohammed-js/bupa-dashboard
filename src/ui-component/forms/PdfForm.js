@@ -126,7 +126,7 @@ export default function PdfForm({ missing, data, setData, setStep }) {
 
   return (
     <form
-      className={styles.container}
+      className={`${styles.container} pick`}
       style={{ overflow: "auto", width: "100%" }}
     >
       <div className={styles.title}>Edit Empty Fields:</div>
