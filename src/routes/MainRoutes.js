@@ -15,6 +15,7 @@ const Members = Loadable(lazy(() => import("../views/Members")));
 const History = Loadable(lazy(() => import("../views/History")));
 const Settings = Loadable(lazy(() => import("../views/Settings")));
 const Support = Loadable(lazy(() => import("../views/Support")));
+const Database = Loadable(lazy(() => import("../views/Database")));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -45,6 +46,10 @@ const MainRoutes = {
     {
       path: "settings",
       element: <Settings />,
+    },
+    {
+      path: "database",
+      element: <Database />,
     },
     {
       path: "support",

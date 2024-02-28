@@ -6,6 +6,7 @@ import {
   IconMessageChatbot,
   IconUsers,
   IconHistory,
+  IconDatabase,
 } from "@tabler/icons-react";
 
 // constant
@@ -16,6 +17,7 @@ const icons = {
   IconMessageChatbot,
   IconUsers,
   IconHistory,
+  IconDatabase,
 };
 
 // ==============================|| DASHBOARD MENU ITEMS ||============================== //
@@ -63,6 +65,14 @@ const dashboard = {
       type: "item",
       url: "/settings",
       icon: icons.IconSettings,
+      breadcrumbs: false,
+    },
+    {
+      id: "database",
+      title: "Database",
+      type: "item",
+      url: "/database",
+      icon: icons.IconDatabase,
       breadcrumbs: false,
     },
     {

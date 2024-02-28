@@ -9,14 +9,17 @@ import Box from "@mui/material/Box";
 import { useTheme } from "@mui/material/styles";
 
 export default function PdfForm({ missing, data, setData, setStep }) {
+  console.log(data.data.customers);
   const uploadedEnCertificateId = data.id;
   const address = data.data.main_info.address.replace(/,|\n/g, " - ");
+  const customers = data.data.customers;
   const [translatedAddress, setTranslatedAddress] = useState(address);
   const [translatedMissing, setTranslatedMissing] = useState({});
   const isDisabled = () => {
     return (
       !translatedAddress ||
       translatedMissing.plan?.some((element) => element === "") ||
+      customers?.some((element) => element.name === "") ||
       translatedMissing.diseases?.some((element) => element === "") ||
       translatedMissing.broker?.some(
         (element) =>
@@ -143,18 +146,9 @@ export default function PdfForm({ missing, data, setData, setStep }) {
         }}
       >
         <Box>العنوان</Box>
-        <Box>Address</Box>
+        <Box></Box>
       </Box>
-      {/* en address */}
-      {/* <Box className={styles.input_container_half} dir="rtl">
-        <input
-          disabled={true}
-          value={address}
-          type="string"
-          className={`${styles.input} ${styles.bottom_margin}`}
-          placeholder="اكتب المحتوى العربي ..."
-        ></input>
-      </Box> */}
+
       {/* ar address */}
       <Box className={styles.input_container_full} dir="rtl">
         <input
@@ -169,6 +163,64 @@ export default function PdfForm({ missing, data, setData, setStep }) {
           placeholder="اكتب المحتوى العربي ..."
         ></input>
       </Box>
+      {/* names */}
+      <Box
+        dir="rtl"
+        sx={{
+          width: "100%",
+          bgcolor: "#5686a3",
+          p: "10px",
+          borderRadius: "10px",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          fontWeight: "bold",
+          color: "white",
+        }}
+      >
+        <Box>اسم العميل</Box>
+        <Box></Box>
+      </Box>
+
+      <div
+        dir="rtl"
+        style={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          flexWrap: "wrap",
+        }}
+      >
+        {customers.map((customer, i) => (
+          <>
+            <Box className={styles.input_container_half} dir="rtl">
+              <div style={{ marginBottom: "5px" }}>
+                العميل رقم {i + 1} {customer.is_main ? `(العميل الأساسي)` : ""}
+              </div>
+              <input
+                style={{
+                  border: customer.is_main ? "1px solid red" : "",
+                  // outline: customer.is_main ? "1px solid red" : "",
+                }}
+                // disabled={true}
+                value={customer.name}
+                onChange={(e) => {
+                  setData((prev) => {
+                    let clonedPrev = { ...prev };
+                    clonedPrev.data.customers[i].name = e.target.value;
+                    return clonedPrev;
+                  });
+                }}
+                id="arAddress"
+                type="string"
+                className={`${styles.input} ${styles.bottom_margin}`}
+                placeholder="اكتب المحتوى العربي ..."
+              ></input>
+            </Box>
+          </>
+        ))}
+      </div>
       {/* plans */}
       {missing.plan?.map((plan, i) => (
         <>
