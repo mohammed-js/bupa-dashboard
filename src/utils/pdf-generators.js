@@ -11,7 +11,8 @@ export const convertToPDF = (
   refSnapshot,
   setRefSnapshot,
   uploadedEnCertificateId,
-  setUploading
+  setUploading,
+  data
 ) => {
   if (option === 1) {
     setRefSnapshot(content);
@@ -91,28 +92,41 @@ export const convertToPDF = (
 
           // update certificate
           var pdfData = pdf.output("blob");
-          axios
-            .patch(
-              `${baseUrl}/documents/${uploadedEnCertificateId}`,
-              {
-                certificate_arabic: pdfData,
-              },
-              {
-                headers: {
-                  "Content-Type": "multipart/form-data",
-                  Authorization: `Bearer ${localStorage.getItem("acc-token")}`,
-                },
-              }
-            )
-            .then((res) => {
-              notifySuccess("Uploaded successfully!");
-              setUploading(false);
-            })
-            .catch((err) => {
-              notifyError("Error when uploading!");
-              setUploading(false);
-            });
         }
+        Promise.allSettled([
+          axios.patch(
+            `${baseUrl}/documents/${uploadedEnCertificateId}`,
+            {
+              certificate_arabic: pdfData,
+            },
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+                Authorization: `Bearer ${localStorage.getItem("acc-token")}`,
+              },
+            }
+          ),
+          // update missing data in DB for next time
+          // axios.put(
+          //   `${baseUrl}/documents/update-translate`,
+          //   data.formattedMissing,
+          //   {
+          //     headers: {
+          //       Authorization: `Bearer ${localStorage.getItem("acc-token")}`,
+          //     },
+          //   }
+          // ),
+        ])
+          .then((results) => {
+            notifySuccess("Uploaded successfully!");
+            setUploading(false);
+          })
+          .catch((error) => {
+            notifyError("Error when uploading!");
+            setUploading(false);
+            console.error("Error occurred:", error);
+          });
+
         return pdf;
       })
       .catch((err) => notifyError("Something went wrong!"));

@@ -41,7 +41,6 @@ const History = () => {
   const [data, setData] = useState({});
   const [page, setPage] = useState(1);
   const [forceUpdate, setForceUpdate] = useState(false);
-  console.log(data);
   useEffect(() => {
     axios
       .get(`${baseUrl}/documents/?page=${page}`, {

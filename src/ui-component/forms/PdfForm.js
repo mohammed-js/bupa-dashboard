@@ -9,12 +9,12 @@ import Box from "@mui/material/Box";
 import { useTheme } from "@mui/material/styles";
 
 export default function PdfForm({ missing, data, setData, setStep }) {
-  console.log(data.data.customers);
   const uploadedEnCertificateId = data.id;
   const address = data.data.main_info.address.replace(/,|\n/g, " - ");
   const customers = data.data.customers;
   const [translatedAddress, setTranslatedAddress] = useState(address);
   const [translatedMissing, setTranslatedMissing] = useState({});
+
   const isDisabled = () => {
     return (
       !translatedAddress ||
@@ -90,29 +90,28 @@ export default function PdfForm({ missing, data, setData, setStep }) {
         }
       });
     });
-    setData({ data: clonedData, id: uploadedEnCertificateId });
+    // add missing and its transaction into data to send them lated to update db
+    let formattedMissing = { disease: {}, plan: {}, broker: [] };
+    missing?.broker?.map((singleBroker, i) => {
+      formattedMissing.broker[i] = {
+        ...singleBroker,
+        percentage: translatedMissing.broker[i].percentage + "%",
+      };
+    });
+    missing?.diseases?.map((singleDisease, i) => {
+      formattedMissing.disease[singleDisease] = translatedMissing.diseases[i];
+    });
+    missing?.plan?.map((singlePlan, i) => {
+      formattedMissing.plan[singlePlan] = translatedMissing.plan[i];
+    });
+
+    // ---------------
+    setData({
+      data: clonedData,
+      id: uploadedEnCertificateId,
+      formattedMissing,
+    });
     setStep(6);
-    // send transaction to sohaila
-    // axios
-    //   .post(
-    //     `${baseUrl}/documents`,
-    //     {
-    //       certificate: certificate,
-    //       national_ids: idImages
-    //     },
-    //     {
-    //       headers: {
-    //         'Content-Type': 'multipart/form-data',
-    //         Authorization: `Bearer ${localStorage.getItem('acc-token')}`
-    //       }
-    //     }
-    //   )
-    //   .then((res) => {
-    //     setStep(5);
-    //     //   setData(res?.data);
-    //     //   setLoading(false);
-    //   })
-    // .catch((err) => notifyError("Something went wrong!"));
   };
 
   function getStyles(name, sizes, theme) {
@@ -200,8 +199,8 @@ export default function PdfForm({ missing, data, setData, setStep }) {
               </div>
               <input
                 style={{
-                  border: customer.is_main ? "1px solid red" : "",
-                  // outline: customer.is_main ? "1px solid red" : "",
+                  border: customer.is_main ? "1px solid blue" : "",
+                  // outline: customer.is_main ? "1px solid blue" : "",
                 }}
                 // disabled={true}
                 value={customer.name}

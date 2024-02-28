@@ -33,7 +33,6 @@ const Dashboard = () => {
 
   const [certificate, setCertificate] = useState({});
   const [idImages, setIdImages] = useState([]);
-  console.log("idImages", idImages);
 
   const [step, setStep] = useState(0);
   useEffect(() => {

@@ -81,8 +81,3 @@ export const convertDateFormat = (dateString) => {
   }
   return dateString;
 };
-
-// Example usage:
-var inputDate = "01-jan-2022";
-var convertedDate = convertDateFormat(inputDate);
-console.log(convertedDate); // Output: 01/01/2022

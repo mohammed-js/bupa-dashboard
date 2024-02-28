@@ -109,8 +109,7 @@ export default function Settings() {
     validationSchema: schema2,
     onSubmit: onSubmit2,
   });
-  console.log(values2);
-  console.log(errors2);
+
   return (
     <>
       <form

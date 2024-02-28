@@ -10,7 +10,6 @@ import { useTheme } from "@mui/material/styles";
 
 export default function PdfForm({ editableTata, data, setData, setStep }) {
   // const address = data.data.main_info.address; // data: not needed
-  console.log(editableTata);
   const navigate = useNavigate();
 
   const onSubmit = async (values, actions) => {

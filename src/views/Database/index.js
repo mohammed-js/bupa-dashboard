@@ -71,7 +71,6 @@ const style = {
 const Database = () => {
   const [data, setData] = useState({});
   const [currentItem, setCurrentItem] = useState({});
-  console.log("sssssssss", currentItem);
   // const [type, setType] = useState("add");
   const [endpoint, setEndpoint] = useState("plan");
   const [page, setPage] = useState(1);
@@ -96,7 +95,6 @@ const Database = () => {
     setOpen(false);
     setCurrentItem({});
   };
-  console.log(data);
   useEffect(() => {
     // setData({});
     axios
@@ -110,7 +108,6 @@ const Database = () => {
   }, [endpoint, page, forceUpdate]);
   const update = (event) => {
     event.preventDefault();
-    console.log(event.target);
     const form = event.target;
     setOpen(false);
     setData({});

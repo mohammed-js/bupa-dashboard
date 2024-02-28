@@ -134,6 +134,7 @@ const PdfViewer = ({ uploadedEnCertificate, data, setStep, setData }) => {
           variant="outlined"
           onClick={() => {
             setUploading(true);
+            // upload translated (arabic) certificate + update missings in database
             convertToPDF(
               contentRef.current,
               5,
@@ -141,7 +142,8 @@ const PdfViewer = ({ uploadedEnCertificate, data, setStep, setData }) => {
               refSnapshot,
               setRefSnapshot,
               certificatedId,
-              setUploading
+              setUploading,
+              data
             );
           }}
         >
