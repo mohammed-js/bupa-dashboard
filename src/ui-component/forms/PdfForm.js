@@ -11,21 +11,20 @@ import { useTheme } from "@mui/material/styles";
 export default function PdfForm({ missing, data, setData, setStep }) {
   const uploadedEnCertificateId = data.id;
   const address = data.data.main_info.address.replace(/,|\n/g, " - ");
+
   const customers = data.data.customers;
   const [translatedAddress, setTranslatedAddress] = useState(address);
+  const [translatedCurrency, setTranslatedCurrency] = useState("");
   const [translatedMissing, setTranslatedMissing] = useState({});
 
   const isDisabled = () => {
     return (
       !translatedAddress ||
+      !translatedCurrency ||
       translatedMissing.plan?.some((element) => element === "") ||
       customers?.some((element) => element.name === "") ||
       translatedMissing.diseases?.some((element) => element === "") ||
-      translatedMissing.broker?.some(
-        (element) =>
-          // element.intermediary_name === "" || element.percentage === ""
-          element.percentage === ""
-      )
+      translatedMissing.broker?.some((element) => element.percentage === "")
     );
   };
   useEffect(() => {
@@ -53,6 +52,7 @@ export default function PdfForm({ missing, data, setData, setStep }) {
     //* updated missing data
     let clonedData = { ...data.data };
     clonedData.main_info.address = translatedAddress;
+    clonedData.main_info.annual_maximum_currency = translatedCurrency;
     clonedData.customers.map((customer, ci) => {
       // let planIndex = missing.plan?.indexOf(customer.plans.plan_name);
       // if (planIndex !== -1 && planIndex !== undefined) {
@@ -91,11 +91,27 @@ export default function PdfForm({ missing, data, setData, setStep }) {
       });
     });
     // add missing and its transaction into data to send them lated to update db
-    let formattedMissing = { disease: {}, plan: {}, broker: [] };
+    let formattedMissing;
+    if (missing?.currency?.[0]) {
+      formattedMissing = {
+        disease: {},
+        plan: {},
+        broker: [],
+        currency: { [missing?.currency?.[0]]: translatedCurrency },
+      };
+    } else {
+      formattedMissing = {
+        disease: {},
+        plan: {},
+        broker: [],
+      };
+    }
+
     missing?.broker?.map((singleBroker, i) => {
       formattedMissing.broker[i] = {
         ...singleBroker,
         percentage: translatedMissing.broker[i].percentage + "%",
+        name: singleBroker.intermediary_name,
       };
     });
     missing?.diseases?.map((singleDisease, i) => {
@@ -104,7 +120,8 @@ export default function PdfForm({ missing, data, setData, setStep }) {
     missing?.plan?.map((singlePlan, i) => {
       formattedMissing.plan[singlePlan] = translatedMissing.plan[i];
     });
-
+    // ------------------
+    console.log("updated missings ===> ", formattedMissing);
     // ---------------
     setData({
       data: clonedData,
@@ -162,6 +179,51 @@ export default function PdfForm({ missing, data, setData, setStep }) {
           placeholder="اكتب المحتوى العربي ..."
         ></input>
       </Box>
+      {/* currency */}
+      {missing?.currency?.[0] && (
+        <>
+          <Box
+            dir="rtl"
+            sx={{
+              width: "100%",
+              bgcolor: "#5686a3",
+              p: "10px",
+              borderRadius: "10px",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              fontWeight: "bold",
+              color: "white",
+            }}
+          >
+            <Box>العملة</Box>
+            <Box></Box>
+          </Box>
+          {/* en currency */}
+          <Box className={styles.input_container_half}>
+            <input
+              disabled={true}
+              value={missing?.currency?.[0]}
+              type="string"
+              className={`${styles.input} ${styles.bottom_margin}`}
+            ></input>
+          </Box>
+          {/* ar currency */}
+          <Box className={styles.input_container_half} dir="rtl">
+            <input
+              value={translatedCurrency}
+              onChange={(e) => {
+                setTranslatedCurrency(e.target.value);
+              }}
+              id="arCurrency"
+              type="string"
+              className={`${styles.input} ${styles.bottom_margin}`}
+              placeholder="اكتب المحتوى العربي ..."
+            ></input>
+          </Box>
+        </>
+      )}
+
       {/* names */}
       <Box
         dir="rtl"
@@ -196,6 +258,9 @@ export default function PdfForm({ missing, data, setData, setStep }) {
             <Box className={styles.input_container_half} dir="rtl">
               <div style={{ marginBottom: "5px" }}>
                 العميل رقم {i + 1} {customer.is_main ? `(العميل الأساسي)` : ""}
+              </div>
+              <div style={{ marginBottom: "5px" }}>
+                {customer.src === "cert" ? "(الشهادة)" : "(البطاقة)"}
               </div>
               <input
                 style={{

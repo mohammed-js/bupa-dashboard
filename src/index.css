@@ -28,7 +28,9 @@
   --error: #f04438;
   --heavy-blue-grey: #a0a8b0;
 }
-
+* {
+  user-select: none !important;
+}
 /* formik */
 
 .error {

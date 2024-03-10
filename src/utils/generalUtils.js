@@ -44,9 +44,10 @@ export const notCoveredText = (
   title,
   name,
   cover_start,
-  is_outpatient,
   disease,
-  tail
+  tail,
+  is_outpatient,
+  isUsa = true
 ) => {
   const tailGenerator = tail?.length > 0 ? `(ينطبق على ${tail})` : "";
   const titleGenerator = title === "mr" ? "للسيد" : "للسيدة";
@@ -55,7 +56,9 @@ export const notCoveredText = (
     : `كل ماله علاقة/ ناتج عن /ناجم عن أو مرتبط بمرض`;
 
   return `
-  تفاصيل الحالة المرضية السابقة للتعاقد المستثناه من التغطية : ${intro} ${disease} ${titleGenerator}/ ${name} و ذلك اعتبارا من ${cover_start} ${tailGenerator}
+  تفاصيل الحالة المرضية السابقة للتعاقد المستثناه من التغطية ${
+    isUsa ? "في الولايات المتحدة الأمريكية " : ""
+  }: ${intro} ${disease} ${titleGenerator}/ ${name} و ذلك اعتبارا من ${cover_start} ${tailGenerator}
   `;
 };
 

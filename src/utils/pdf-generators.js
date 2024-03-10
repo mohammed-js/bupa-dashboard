@@ -107,15 +107,15 @@ export const convertToPDF = (
             }
           ),
           // update missing data in DB for next time
-          // axios.put(
-          //   `${baseUrl}/documents/update-translate`,
-          //   data.formattedMissing,
-          //   {
-          //     headers: {
-          //       Authorization: `Bearer ${localStorage.getItem("acc-token")}`,
-          //     },
-          //   }
-          // ),
+          axios.put(
+            `${baseUrl}/documents/update-translate`,
+            data.formattedMissing,
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("acc-token")}`,
+              },
+            }
+          ),
         ])
           .then((results) => {
             notifySuccess("Uploaded successfully!");

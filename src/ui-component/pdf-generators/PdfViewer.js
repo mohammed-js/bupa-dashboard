@@ -415,9 +415,10 @@ const PdfViewer = ({ uploadedEnCertificate, data, setStep, setData }) => {
                         customer.title,
                         customer.name,
                         convertDateFormat(item.date),
-                        item.is_outpatient,
                         item.name,
-                        item.applies_to
+                        item.applies_to,
+                        item.is_outpatient,
+                        item.is_usa
                       ),
                     }))}
                 />
@@ -440,7 +441,9 @@ const PdfViewer = ({ uploadedEnCertificate, data, setStep, setData }) => {
                         customer.name,
                         customer.cover_start,
                         item.name,
-                        item.applies_to
+                        item.applies_to,
+                        item.is_outpatient,
+                        item.is_usa
                       ),
                     }))}
                 />

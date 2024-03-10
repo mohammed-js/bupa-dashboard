@@ -400,6 +400,24 @@ const Database = () => {
           </TableContainer>
         </>
       )}
+
+      {Array.isArray(data?.results) && data?.results.length == 0 && (
+        <Box
+          sx={{
+            height: "300px",
+            fontSize: "30px",
+            boxShadow:
+              "rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px",
+            borderRadius: "3px",
+            backgroundColor: "#fff",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          No Data Found
+        </Box>
+      )}
     </>
   );
 };
