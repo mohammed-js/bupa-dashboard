@@ -16,17 +16,18 @@ export default function PdfForm({ missing, data, setData, setStep }) {
   const [translatedAddress, setTranslatedAddress] = useState(address);
   const [translatedCurrency, setTranslatedCurrency] = useState("");
   const [translatedMissing, setTranslatedMissing] = useState({});
-
-  const isDisabled = () => {
-    return (
-      !translatedAddress ||
-      !translatedCurrency ||
-      translatedMissing.plan?.some((element) => element === "") ||
-      customers?.some((element) => element.name === "") ||
-      translatedMissing.diseases?.some((element) => element === "") ||
-      translatedMissing.broker?.some((element) => element.percentage === "")
-    );
-  };
+  console.log("translatedMissing", translatedMissing);
+  // const isDisabled = () => {
+  //   return (
+  //     !translatedAddress ||
+  //     !translatedCurrency ||
+  //     translatedMissing.plan?.some((element) => element === "") ||
+  //     customers?.some((element) => element.name === "") ||
+  //     translatedMissing.diseases?.some((element) => element === "") ||
+  //     translatedMissing.broker?.some((element) => element.percentage === "")
+  //   );
+  // };
+  console.log(!translatedCurrency);
   useEffect(() => {
     const translatedDiseases = [];
     const translatedPlans = [];
@@ -51,6 +52,7 @@ export default function PdfForm({ missing, data, setData, setStep }) {
     setStep(0);
     //* updated missing data
     let clonedData = { ...data.data };
+    console.log("clonedData", clonedData);
     clonedData.main_info.address = translatedAddress;
     clonedData.main_info.annual_maximum_currency = translatedCurrency;
     clonedData.customers.map((customer, ci) => {
@@ -142,6 +144,7 @@ export default function PdfForm({ missing, data, setData, setStep }) {
 
   return (
     <form
+      onSubmit={handleSubmit}
       className={`${styles.container} pick`}
       style={{ overflow: "auto", width: "100%" }}
     >
@@ -177,6 +180,7 @@ export default function PdfForm({ missing, data, setData, setStep }) {
           type="string"
           className={`${styles.input} ${styles.bottom_margin}`}
           placeholder="اكتب المحتوى العربي ..."
+          required
         ></input>
       </Box>
       {/* currency */}
@@ -206,6 +210,7 @@ export default function PdfForm({ missing, data, setData, setStep }) {
               value={missing?.currency?.[0]}
               type="string"
               className={`${styles.input} ${styles.bottom_margin}`}
+              required
             ></input>
           </Box>
           {/* ar currency */}
@@ -219,6 +224,7 @@ export default function PdfForm({ missing, data, setData, setStep }) {
               type="string"
               className={`${styles.input} ${styles.bottom_margin}`}
               placeholder="اكتب المحتوى العربي ..."
+              required
             ></input>
           </Box>
         </>
@@ -280,6 +286,7 @@ export default function PdfForm({ missing, data, setData, setStep }) {
                 type="string"
                 className={`${styles.input} ${styles.bottom_margin}`}
                 placeholder="اكتب المحتوى العربي ..."
+                required
               ></input>
             </Box>
           </>
@@ -316,6 +323,7 @@ export default function PdfForm({ missing, data, setData, setStep }) {
               type="string"
               className={`${styles.input} ${styles.bottom_margin}`}
               placeholder="اكتب المحتوى العربي ..."
+              required
             ></input>
           </Box>
           {/* ar plan */}
@@ -331,6 +339,7 @@ export default function PdfForm({ missing, data, setData, setStep }) {
               type="string"
               className={`${styles.input} ${styles.bottom_margin}`}
               placeholder="اكتب المحتوى العربي ..."
+              required
             ></input>
           </Box>
         </>
@@ -366,6 +375,7 @@ export default function PdfForm({ missing, data, setData, setStep }) {
               type="string"
               className={`${styles.input} ${styles.bottom_margin}`}
               placeholder="اكتب المحتوى العربي ..."
+              required
             ></input>
           </Box>
           {/* ar address */}
@@ -381,6 +391,7 @@ export default function PdfForm({ missing, data, setData, setStep }) {
               type="string"
               className={`${styles.input} ${styles.bottom_margin}`}
               placeholder="اكتب المحتوى العربي ..."
+              required
             ></input>
           </Box>
         </>
@@ -415,6 +426,7 @@ export default function PdfForm({ missing, data, setData, setStep }) {
               value={broker.intermediary_name}
               type="string"
               className={`${styles.input} ${styles.bottom_margin}`}
+              required
             ></input>
           </Box>
           {/* ar broker */}
@@ -446,6 +458,7 @@ export default function PdfForm({ missing, data, setData, setStep }) {
               type="number"
               className={`${styles.input} ${styles.bottom_margin}`}
               placeholder="enter percentage ..."
+              required
             ></input>
           </Box>
         </>
@@ -454,16 +467,17 @@ export default function PdfForm({ missing, data, setData, setStep }) {
       <Box
         component="button"
         type="submit"
-        disabled={isDisabled()}
+        // disabled={isDisabled()}
         sx={{
-          cursor: isDisabled() ? "not-allowed" : "pointer",
+          // cursor: isDisabled() ? "not-allowed" : "pointer",
+          cursor: "pointer",
           m: "auto",
           bgcolor: "#101f33",
           p: "5px",
           borderRadius: "5px",
           color: "white",
         }}
-        onClick={handleSubmit}
+        // onClick={handleSubmit}
       >
         Convert to pdf file
       </Box>
