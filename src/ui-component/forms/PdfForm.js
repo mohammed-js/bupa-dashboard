@@ -54,7 +54,11 @@ export default function PdfForm({ missing, data, setData, setStep }) {
     let clonedData = { ...data.data };
     console.log("clonedData", clonedData);
     clonedData.main_info.address = translatedAddress;
-    clonedData.main_info.annual_maximum_currency = translatedCurrency;
+
+    if (missing?.currency?.[0]) {
+      clonedData.main_info.annual_maximum_currency = translatedCurrency;
+    }
+
     clonedData.customers.map((customer, ci) => {
       // let planIndex = missing.plan?.indexOf(customer.plans.plan_name);
       // if (planIndex !== -1 && planIndex !== undefined) {
@@ -262,12 +266,26 @@ export default function PdfForm({ missing, data, setData, setStep }) {
         {customers.map((customer, i) => (
           <>
             <Box className={styles.input_container_half} dir="rtl">
-              <div style={{ marginBottom: "5px" }}>
-                العميل رقم {i + 1} {customer.is_main ? `(العميل الأساسي)` : ""}
-              </div>
-              <div style={{ marginBottom: "5px" }}>
-                {customer.src === "cert" ? "(الشهادة)" : "(البطاقة)"}
-              </div>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "10px",
+                  color: customer.is_main ? "blue" : "",
+                }}
+              >
+                <div
+                  style={{
+                    marginBottom: "5px",
+                  }}
+                >
+                  العميل رقم {i + 1}{" "}
+                  {customer.is_main ? `(العميل الأساسي)` : ""}
+                </div>
+                <div style={{ marginBottom: "5px" }}>
+                  {customer.src === "cert" ? "(الشهادة)" : "(البطاقة)"}
+                </div>
+              </Box>
               <input
                 style={{
                   border: customer.is_main ? "1px solid blue" : "",

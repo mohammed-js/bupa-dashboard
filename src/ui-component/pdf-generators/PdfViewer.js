@@ -24,9 +24,12 @@ const PdfViewer = ({ uploadedEnCertificate, data, setStep, setData }) => {
   // * data extraction
   const certificatedId = data.id;
   const main_info = data.data.main_info;
+  console.log(main_info);
   const currency = main_info.annual_maximum_currency;
   const customers = data.data.customers;
-  console.log(data);
+  console.log("data", data);
+  console.log("main_info", main_info);
+  console.log("currency", currency);
   // ------------
   const [lastPageContent, setLastPageContent] = useState(1);
   // uploadedEnCertificate url

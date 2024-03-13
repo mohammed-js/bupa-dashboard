@@ -47,7 +47,7 @@ export const notCoveredText = (
   disease,
   tail,
   is_outpatient,
-  isUsa = true
+  isUsa
 ) => {
   const tailGenerator = tail?.length > 0 ? `(ينطبق على ${tail})` : "";
   const titleGenerator = title === "mr" ? "للسيد" : "للسيدة";
