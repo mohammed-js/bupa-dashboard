@@ -340,7 +340,8 @@ const PdfViewer = ({ uploadedEnCertificate, data, setStep, setData }) => {
                         },
                         {
                           a: "نسبة العمولة الأساسية لوسيط التأمين",
-                          b: `${item.percentage}%`,
+                          // b: `${item.percentage}%`,
+                          b: `${item.percentage}`,
                         },
                       ];
                     })
