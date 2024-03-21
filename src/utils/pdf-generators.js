@@ -92,40 +92,40 @@ export const convertToPDF = (
 
           // update certificate
           var pdfData = pdf.output("blob");
+          Promise.allSettled([
+            axios.patch(
+              `${baseUrl}/documents/${uploadedEnCertificateId}`,
+              {
+                certificate_arabic: pdfData,
+              },
+              {
+                headers: {
+                  "Content-Type": "multipart/form-data",
+                  Authorization: `Bearer ${localStorage.getItem("acc-token")}`,
+                },
+              }
+            ),
+            // update missing data in DB for next time
+            axios.put(
+              `${baseUrl}/documents/update-translate`,
+              data.formattedMissing,
+              {
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem("acc-token")}`,
+                },
+              }
+            ),
+          ])
+            .then((results) => {
+              notifySuccess("Uploaded successfully!");
+              setUploading(false);
+            })
+            .catch((error) => {
+              notifyError("Error when uploading!");
+              setUploading(false);
+              console.error("Error occurred:", error);
+            });
         }
-        Promise.allSettled([
-          axios.patch(
-            `${baseUrl}/documents/${uploadedEnCertificateId}`,
-            {
-              certificate_arabic: pdfData,
-            },
-            {
-              headers: {
-                "Content-Type": "multipart/form-data",
-                Authorization: `Bearer ${localStorage.getItem("acc-token")}`,
-              },
-            }
-          ),
-          // update missing data in DB for next time
-          axios.put(
-            `${baseUrl}/documents/update-translate`,
-            data.formattedMissing,
-            {
-              headers: {
-                Authorization: `Bearer ${localStorage.getItem("acc-token")}`,
-              },
-            }
-          ),
-        ])
-          .then((results) => {
-            notifySuccess("Uploaded successfully!");
-            setUploading(false);
-          })
-          .catch((error) => {
-            notifyError("Error when uploading!");
-            setUploading(false);
-            console.error("Error occurred:", error);
-          });
 
         return pdf;
       })
