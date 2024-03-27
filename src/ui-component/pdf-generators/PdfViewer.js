@@ -25,6 +25,7 @@ const PdfViewer = ({ uploadedEnCertificate, data, setStep, setData }) => {
   const certificatedId = data.id;
   const main_info = data.data.main_info;
   console.log(main_info);
+  const annualMaximum = main_info.annual_maximum;
   const currency = main_info.annual_maximum_currency;
   const customers = data.data.customers;
   console.log("data", data);
@@ -253,7 +254,7 @@ const PdfViewer = ({ uploadedEnCertificate, data, setStep, setData }) => {
             {intro(
               customers[0]?.title === "mr" ? "السيد" : "السيدة",
               customers[0]?.name,
-              customers[0]?.plans?.[0].annual_maximum,
+              annualMaximum,
               currency,
               customers.filter((customer) => customer.is_main)[0].area_of_cover
             )}
