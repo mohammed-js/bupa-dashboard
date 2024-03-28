@@ -309,19 +309,24 @@ const PdfViewer = ({ uploadedEnCertificate, data, setStep, setData }) => {
                   customer?.plans[0].annual_deductible
                     ? `التحمل السنوي (${currency})`
                     : null,
+                  customer?.plans[0].co_insurance ? `نسبة التحمل` : null,
                   `الحد الأقصى السنوي (${currency})`,
                 ].filter((item) => item !== null)}
                 bodyData={customer?.plans.map((item) => {
-                  return item.annual_deductible
-                    ? {
-                        a: item.plan_name,
-                        b: item.annual_deductible,
-                        c: item.annual_maximum,
-                      }
-                    : {
-                        a: item.plan_name,
-                        b: item.annual_maximum,
-                      };
+                  return Object.entries(item)
+                    .filter(([key, value]) => value !== null)
+                    .map((item) => item[1]);
+
+                  // item.annual_deductible
+                  //   ? {
+                  //       a: item.plan_name,
+                  //       b: item.annual_deductible,
+                  //       c: item.annual_maximum,
+                  //     }
+                  //   : {
+                  //       a: item.plan_name,
+                  //       b: item.annual_maximum,
+                  //     };
                 })}
               />
               {/*------------------------------- additional info (broker) ---------------------------------- */}
@@ -342,7 +347,11 @@ const PdfViewer = ({ uploadedEnCertificate, data, setStep, setData }) => {
                         {
                           a: "نسبة العمولة الأساسية لوسيط التأمين",
                           // b: `${item.percentage}%`,
-                          b: `${item.percentage}`,
+                          b: `${
+                            item.percentage.endsWith("%")
+                              ? item.percentage
+                              : item.percentage + "%"
+                          }`,
                         },
                       ];
                     })
