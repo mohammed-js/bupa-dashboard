@@ -1,19 +1,19 @@
-function removeFirstAl(string) {
-  // Split the string into words
-  var words = string.split(" ");
+// function removeFirstAl(string) {
+//   // Split the string into words
+//   var words = string.split(" ");
 
-  // Iterate over each word and remove the first 'ال'
-  for (var i = 0; i < words.length; i++) {
-    // Check if the word starts with 'ال'
-    if (words[i].startsWith("ال")) {
-      // Remove the first 'ال'
-      words[i] = words[i].substring(2);
-    }
-  }
+//   // Iterate over each word and remove the first 'ال'
+//   for (var i = 0; i < words.length; i++) {
+//     // Check if the word starts with 'ال'
+//     if (words[i].startsWith("ال")) {
+//       // Remove the first 'ال'
+//       words[i] = words[i].substring(2);
+//     }
+//   }
 
-  // Join the words back into a string and return
-  return words.join(" ");
-}
+//   // Join the words back into a string and return
+//   return words.join(" ");
+// }
 
 export const intro = (
   title = "السيد",
@@ -27,9 +27,7 @@ export const intro = (
 المتعلقة بالمزايا والحدود والإستثناءات المطبقة على خطة التأمين الخاصة بك في كتيب المزايا والإستثناءات. 
   
 نؤكد بموجب هذه الوثيقة أن الأشخاص المذكورين أدناه عملاء بخطة بوبا إيجيبت للتأمين الطبي. تغطي الخطة التأمينية تكاليف
-العلاج المستحق وتكاليف الإقامة في المستشفى وتكاليف العلاج الفعال بحد سنوي أقصى قدره ${max} ${removeFirstAl(
-  currency
-)}
+العلاج المستحق وتكاليف الإقامة في المستشفى وتكاليف العلاج الفعال بحد سنوي أقصى قدره ${max} ${currency}
 في ${area_of_cover}
 برجاء ملاحظة أن هناك بعض المزايا التي تطبق عليها الحدود الجزئية. 
   
