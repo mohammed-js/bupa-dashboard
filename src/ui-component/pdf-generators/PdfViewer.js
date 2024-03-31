@@ -314,7 +314,10 @@ const PdfViewer = ({ uploadedEnCertificate, data, setStep, setData }) => {
                 ].filter((item) => item !== null)}
                 bodyData={customer?.plans.map((item) => {
                   return Object.entries(item)
-                    .filter(([key, value]) => value !== null)
+                    .filter(
+                      ([key, value]) =>
+                        value !== null && key !== "annual_maximum_currency"
+                    )
                     .map((item) => item[1]);
 
                   // item.annual_deductible
