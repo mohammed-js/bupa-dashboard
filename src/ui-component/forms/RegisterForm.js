@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./LoginForm.module.css";
 import Switch from "@mui/material/Switch";
-import { schema, initialValues } from "../../utils/schemas/loginSchema";
+import { schema, initialValues } from "../../utils/schemas/registerSchema";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import { baseUrl } from "../../views/utilities/general";
@@ -20,19 +20,23 @@ export default function LoginForm() {
   const onSubmit = async (values, actions) => {
     setIsLoading(true);
     axios
-      .post(`${baseUrl}/auth/tokens/`, {
-        login: values.bupaEmail,
+      .post(`${baseUrl}/users/register/`, {
+        first_name: values.bupaFirstName,
+        last_name: values.bupaLastName,
+        email: values.bupaEmail,
         password: values.bupaPassword,
+        confirm_password: values.bupaPassword,
+        phone_number: values.bupaPhone,
       })
       .then((res) => {
         setIsLoading(false);
-        notifySuccess("Login Successful!");
-        navigate("/translate_certificate");
-        localStorage.setItem("acc-token", res.data.tokens.access);
+        notifySuccess("Register Successful!");
+        navigate("/login");
       })
       .catch((err) => {
+        console.log(err.response.data.email[0]);
         setIsLoading(false);
-        notifyError(err.response.data.detail);
+        notifyError(err.response.data.email[0]);
       });
   };
 
@@ -50,7 +54,6 @@ export default function LoginForm() {
     validationSchema: schema,
     onSubmit,
   });
-
   return (
     <form
       className={`${styles.container} pick`}
@@ -60,7 +63,7 @@ export default function LoginForm() {
         width: "100%",
         backgroundColor: "#fff",
         position: "relative",
-        top: "100px",
+        top: "20px",
         margin: "20px",
         boxShadow:
           "rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px",
@@ -84,6 +87,50 @@ export default function LoginForm() {
 
       {!isLoading && (
         <>
+          {/* first name */}
+          <div className={styles.label}>
+            <span>First Name</span>
+            <span className={styles.error}> *</span>
+            {errors.bupaFirstName && touched.bupaFirstName && (
+              <span className="error">{errors.bupaFirstName}</span>
+            )}
+          </div>
+          <input
+            // className={`${styles.input} ${styles.bottom_margin}`}
+            value={values.bupaFirstName}
+            onChange={handleChange}
+            id="bupaFirstName"
+            type="text"
+            onBlur={handleBlur}
+            className={
+              errors.bupaFirstName && touched.bupaFirstName
+                ? `${styles.input} ${styles.bottom_margin} input-error`
+                : `${styles.input} ${styles.bottom_margin}`
+            }
+            placeholder="Your First Name"
+          ></input>
+          {/* last name */}
+          <div className={styles.label}>
+            <span>Last Name</span>
+            <span className={styles.error}> *</span>
+            {errors.bupaLastName && touched.bupaLastName && (
+              <span className="error">{errors.bupaLastName}</span>
+            )}
+          </div>
+          <input
+            // className={`${styles.input} ${styles.bottom_margin}`}
+            value={values.bupaLastName}
+            onChange={handleChange}
+            id="bupaLastName"
+            type="text"
+            onBlur={handleBlur}
+            className={
+              errors.bupaLastName && touched.bupaLastName
+                ? `${styles.input} ${styles.bottom_margin} input-error`
+                : `${styles.input} ${styles.bottom_margin}`
+            }
+            placeholder="Your Last Name"
+          ></input>
           {/* email */}
           <div className={styles.label}>
             <span>Email</span>
@@ -101,6 +148,28 @@ export default function LoginForm() {
             onBlur={handleBlur}
             className={
               errors.bupaEmail && touched.bupaEmail
+                ? `${styles.input} ${styles.bottom_margin} input-error`
+                : `${styles.input} ${styles.bottom_margin}`
+            }
+            placeholder="Your email"
+          ></input>
+          {/* phone */}
+          <div className={styles.label}>
+            <span>Phone</span>
+            <span className={styles.bupaPhone}> *</span>
+            {errors.bupaPhone && touched.bupaPhone && (
+              <span className="error">{errors.bupaPhone}</span>
+            )}
+          </div>
+          <input
+            // className={`${styles.input} ${styles.bottom_margin}`}
+            value={values.bupaPhone}
+            onChange={handleChange}
+            id="bupaPhone"
+            type="text"
+            onBlur={handleBlur}
+            className={
+              errors.bupaPhone && touched.bupaPhone
                 ? `${styles.input} ${styles.bottom_margin} input-error`
                 : `${styles.input} ${styles.bottom_margin}`
             }
@@ -128,9 +197,9 @@ export default function LoginForm() {
                 : `${styles.input} ${styles.bottom_margin}`
             }
           ></input>
-          <button className={styles.brown_button}>Login</button>
+          <button className={styles.brown_button}>Register</button>
           <div style={{ marginTop: "25px" }}>
-            Not a user? <Link to="/register">Register</Link>
+            Have an account? <Link to="/login">Login</Link>
           </div>
         </>
       )}
