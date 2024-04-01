@@ -14,6 +14,7 @@ import {
   lastSectionP2,
   notCoveredText,
   convertDateFormat,
+  hasValues,
 } from "../../utils/generalUtils.js";
 import { notifySuccess, notifyError } from "../../utils/toastify.js";
 import { convertToPDF } from "../../utils/pdf-generators.js";
@@ -159,37 +160,39 @@ const PdfViewer = ({ uploadedEnCertificate, data, setStep, setData }) => {
             "Upload Arabic Certificate To Database"
           )}
         </Button>
-        <Button
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            fontSize: { xs: "10px", sm: "14px" },
-            p: { xs: "0", sm: "5px" },
-            pointerEvents: uploading ? "none" : "initial",
-          }}
-          variant="outlined"
-          onClick={() => {
-            setUpdating(true);
-            // upload translated (arabic) certificate + update missings in database
-            convertToPDF(
-              undefined,
-              6,
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              setUpdating,
-              data
-            );
-          }}
-        >
-          {updating ? (
-            <CircularProgress sx={{ fontSize: "10px" }} size="15px" />
-          ) : (
-            "Update missing data"
-          )}
-        </Button>
+        {hasValues(data.formattedMissing) && (
+          <Button
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              fontSize: { xs: "10px", sm: "14px" },
+              p: { xs: "0", sm: "5px" },
+              pointerEvents: uploading ? "none" : "initial",
+            }}
+            variant="outlined"
+            onClick={() => {
+              setUpdating(true);
+              // upload translated (arabic) certificate + update missings in database
+              convertToPDF(
+                undefined,
+                6,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                setUpdating,
+                data
+              );
+            }}
+          >
+            {updating ? (
+              <CircularProgress sx={{ fontSize: "10px" }} size="15px" />
+            ) : (
+              "Update missing data"
+            )}
+          </Button>
+        )}
         <Button
           sx={{
             display: "flex",

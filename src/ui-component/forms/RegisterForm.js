@@ -34,7 +34,6 @@ export default function LoginForm() {
         navigate("/login");
       })
       .catch((err) => {
-        console.log(err.response.data.email[0]);
         setIsLoading(false);
         notifyError(err.response.data.email[0]);
       });

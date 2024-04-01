@@ -101,3 +101,15 @@ export const convertDateFormat = (dateString) => {
   }
   return dateString;
 };
+
+export const hasValues = (obj) => {
+  for (let key in obj) {
+    if (Array.isArray(obj[key]) && obj[key].length > 0) {
+      return true;
+    }
+    if (typeof obj[key] === "object" && Object.keys(obj[key]).length > 0) {
+      return true;
+    }
+  }
+  return false;
+};
