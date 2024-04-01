@@ -21,6 +21,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Table from "./Table.js";
 const PdfViewer = ({ uploadedEnCertificate, data, setStep, setData }) => {
   const [uploading, setUploading] = useState(false);
+  const [updating, setUpdating] = useState(false);
   // * data extraction
   const certificatedId = data.id;
   const main_info = data.data.main_info;
@@ -156,6 +157,37 @@ const PdfViewer = ({ uploadedEnCertificate, data, setStep, setData }) => {
             <CircularProgress sx={{ fontSize: "10px" }} size="15px" />
           ) : (
             "Upload Arabic Certificate To Database"
+          )}
+        </Button>
+        <Button
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            fontSize: { xs: "10px", sm: "14px" },
+            p: { xs: "0", sm: "5px" },
+            pointerEvents: uploading ? "none" : "initial",
+          }}
+          variant="outlined"
+          onClick={() => {
+            setUpdating(true);
+            // upload translated (arabic) certificate + update missings in database
+            convertToPDF(
+              undefined,
+              6,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              setUpdating,
+              data
+            );
+          }}
+        >
+          {updating ? (
+            <CircularProgress sx={{ fontSize: "10px" }} size="15px" />
+          ) : (
+            "Update missing data"
           )}
         </Button>
         <Button

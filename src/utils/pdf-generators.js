@@ -18,7 +18,30 @@ export const convertToPDF = (
     setRefSnapshot(content);
     return;
   }
-
+  if (option === 6) {
+    // update certificate
+    Promise.allSettled([
+      // update missing data in DB for next time
+      axios.put(
+        `${baseUrl}/documents/update-translate`,
+        data.formattedMissing,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("acc-token")}`,
+          },
+        }
+      ),
+    ])
+      .then((results) => {
+        notifySuccess("Updated successfully!");
+        setUploading(false);
+      })
+      .catch((error) => {
+        notifyError("Error when updating!");
+        setUploading(false);
+        console.error("Error occurred:", error);
+      });
+  }
   if (refSnapshot) {
     //* functionality
     html2pdf()
@@ -106,15 +129,15 @@ export const convertToPDF = (
               }
             ),
             // update missing data in DB for next time
-            axios.put(
-              `${baseUrl}/documents/update-translate`,
-              data.formattedMissing,
-              {
-                headers: {
-                  Authorization: `Bearer ${localStorage.getItem("acc-token")}`,
-                },
-              }
-            ),
+            // axios.put(
+            //   `${baseUrl}/documents/update-translate`,
+            //   data.formattedMissing,
+            //   {
+            //     headers: {
+            //       Authorization: `Bearer ${localStorage.getItem("acc-token")}`,
+            //     },
+            //   }
+            // ),
           ])
             .then((results) => {
               notifySuccess("Uploaded successfully!");
