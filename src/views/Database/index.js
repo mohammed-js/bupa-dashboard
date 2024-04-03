@@ -118,6 +118,15 @@ const Database = () => {
     const percentage = form?.elements["percentage"]?.value;
     // -----
     let body;
+    let method;
+    let path;
+    if (currentItem?.name) {
+      method = "patch";
+      path = `${baseUrl}/translator/${endpoint}/${currentItem.id}`;
+    } else {
+      method = "post";
+      path = `${baseUrl}/translator/${endpoint}/`;
+    }
     if (endpoint !== "broker") {
       body = {
         name: en_name,
@@ -131,12 +140,11 @@ const Database = () => {
       };
     }
 
-    axios
-      .post(`${baseUrl}/translator/${endpoint}/`, body, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("acc-token")}`,
-        },
-      })
+    axios[method](path, body, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("acc-token")}`,
+      },
+    })
       .then((res) => {
         setForceUpdate((prev) => !prev);
         setCurrentItem({});
@@ -359,6 +367,8 @@ const Database = () => {
                       <StyledTableCell align="left">Percentage</StyledTableCell>
                     </>
                   )}
+                  <StyledTableCell align="left">Created At</StyledTableCell>
+                  <StyledTableCell align="left">Updated At</StyledTableCell>
                   <StyledTableCell align="right">Edit</StyledTableCell>
                 </TableRow>
               </TableHead>
@@ -381,6 +391,12 @@ const Database = () => {
                         </StyledTableCell>
                       </>
                     )}
+                    <StyledTableCell align="left">
+                      {new Date(item.created_at).toLocaleString()}
+                    </StyledTableCell>
+                    <StyledTableCell align="left">
+                      {new Date(item.updated_at).toLocaleString()}
+                    </StyledTableCell>
                     <StyledTableCell align="right">
                       <IconButton
                         color="primary"
