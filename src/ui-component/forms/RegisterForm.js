@@ -36,7 +36,8 @@ export default function LoginForm() {
       .catch((err) => {
         setIsLoading(false);
         // notifyError(err.response.data.email[0]);
-        notifyError(err.response.data.Object.keys(obj)[0][0]);
+        const firstKey = Object.keys(obj)[0];
+        notifyError(err.response.data[firstKey][0]);
       });
   };
 
