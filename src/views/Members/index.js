@@ -45,7 +45,7 @@ const Members = () => {
     axios
       .get(`${baseUrl}/users/?page=${page}`, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("bupa-")}`,
+          Authorization: `Bearer ${localStorage.getItem("bupa-acc-token")}`,
         },
       })
       .then((res) => setData(res.data))
