@@ -18,7 +18,7 @@ export const schema = yup.object().shape({
   bupaPassword: yup
     .string()
     .min(8, "Must be at least 8 characters long")
-    // .matches(passwordRules, { message: "Please create a stronger password" })
+    .matches(passwordRules, { message: "Please create a stronger password" })
     .required("Required"),
 });
 

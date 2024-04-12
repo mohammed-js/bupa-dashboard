@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import { baseUrl } from "../../views/utilities/general";
 import Box from "@mui/material/Box";
 import { notifySuccess, notifyError } from "../../utils/toastify";
-import { useTheme } from "@mui/material/styles";
 import LinearProgress from "@mui/material/LinearProgress";
 import axios from "axios";
 import logo from "../../assets/images/bupa/logo.svg";
@@ -36,7 +35,8 @@ export default function LoginForm() {
       .catch((err) => {
         setIsLoading(false);
         // notifyError(err.response.data.email[0]);
-        const firstKey = Object.keys(obj)[0];
+        console.log(err.response.data);
+        const firstKey = Object.keys(err.response.data)[0];
         notifyError(err.response.data[firstKey][0]);
       });
   };

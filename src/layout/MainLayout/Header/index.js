@@ -7,9 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 // project imports
 import LogoSection from "../LogoSection";
-import SearchSection from "./SearchSection";
 import ProfileSection from "./ProfileSection";
-import NotificationSection from "./NotificationSection";
 import IconButton from "@mui/material/IconButton";
 import LogoutIcon from "@mui/icons-material/Logout";
 // assets
@@ -62,18 +60,11 @@ const Header = ({ handleLeftDrawerToggle }) => {
         </ButtonBase>
       </Box>
 
-      {/* header search */}
-      {/* <SearchSection /> */}
       <Box sx={{ flexGrow: 1 }} />
       <Box sx={{ flexGrow: 1 }} />
 
-      {/* notification & profile */}
-      {/* <NotificationSection /> */}
       <ProfileSection />
-      {/* <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', position: 'absolute', bottom: '30px' }}> */}
-      {/* <Button variant="contained" endIcon={<LogoutIcon />} sx={{ m: 'auto' }}>
-        Logout
-      </Button> */}
+
       <IconButton color="primary" aria-label="add to shopping cart">
         <LogoutIcon
           onClick={() => {
@@ -83,7 +74,6 @@ const Header = ({ handleLeftDrawerToggle }) => {
           }}
         />
       </IconButton>
-      {/* </Box> */}
     </>
   );
 };

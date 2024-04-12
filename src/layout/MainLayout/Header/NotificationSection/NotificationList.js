@@ -24,7 +24,7 @@ import {
   IconMailbox,
   IconPhoto,
 } from "@tabler/icons-react";
-import User1 from "../../../../assets/images/users/user-round.svg";
+import admin from "../../../../assets/images/bupa/admin.svg";
 
 // styles
 const ListItemWrapper = styled("div")(({ theme }) => ({
@@ -91,7 +91,8 @@ const NotificationList = () => {
       <ListItemWrapper>
         <ListItem alignItems="center">
           <ListItemAvatar>
-            <Avatar alt="John Doe" src={User1} />
+            {/* <Avatar alt="John Doe" src={User1} /> */}
+            <Avatar alt="John Doe" src={admin} />
           </ListItemAvatar>
           <ListItemText primary="John Doe" />
           <ListItemSecondaryAction>
@@ -225,7 +226,8 @@ const NotificationList = () => {
       <ListItemWrapper>
         <ListItem alignItems="center">
           <ListItemAvatar>
-            <Avatar alt="John Doe" src={User1} />
+            {/* <Avatar alt="John Doe" src={User1} /> */}
+            <Avatar alt="John Doe" src={admin} />
           </ListItemAvatar>
           <ListItemText
             primary={<Typography variant="subtitle1">John Doe</Typography>}
@@ -277,7 +279,7 @@ const NotificationList = () => {
       <ListItemWrapper>
         <ListItem alignItems="center">
           <ListItemAvatar>
-            <Avatar alt="John Doe" src={User1} />
+            <Avatar alt="John Doe" src={admin} />
           </ListItemAvatar>
           <ListItemText
             primary={<Typography variant="subtitle1">John Doe</Typography>}
