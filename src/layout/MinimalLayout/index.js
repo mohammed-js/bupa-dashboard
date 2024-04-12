@@ -1,14 +1,8 @@
-import { Outlet } from 'react-router-dom';
-
-// project imports
-import Customization from '../Customization';
-
-// ==============================|| MINIMAL LAYOUT ||============================== //
+import { Outlet } from "react-router-dom";
 
 const MinimalLayout = () => (
-  <div style={{ backgroundColor: '#f2faff', height: '100vh' }}>
+  <div style={{ backgroundColor: "#f2faff", height: "100vh" }}>
     <Outlet />
-    {/* <Customization /> */}
   </div>
 );
 

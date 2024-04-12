@@ -8,8 +8,6 @@ import PdfForm from "../../ui-component/forms/PdfForm";
 import PdfViewer from "../../ui-component/pdf-generators/PdfViewer";
 import { notifySuccess, notifyError } from "../../utils/toastify";
 import IconButton from "@mui/material/IconButton";
-import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
-import MainCard from "../../ui-component/cards/MainCard";
 import uploadSection from "../../assets/images/bupa/upload-section.svg";
 import dragSection from "../../assets/images/bupa/drag-section.svg";
 import dragSection2 from "../../assets/images/bupa/drag-section2.svg";

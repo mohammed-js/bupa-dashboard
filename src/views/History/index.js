@@ -45,7 +45,7 @@ const History = () => {
     axios
       .get(`${baseUrl}/documents/?page=${page}`, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("acc-token")}`,
+          Authorization: `Bearer ${localStorage.getItem("bupa-acc-token")}`,
         },
       })
       .then((res) => setData(res.data))

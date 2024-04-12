@@ -100,7 +100,7 @@ const Database = () => {
     axios
       .get(`${baseUrl}/translator/${endpoint}/${queryBuilder}`, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("acc-token")}`,
+          Authorization: `Bearer ${localStorage.getItem("bupa-acc-token")}`,
         },
       })
       .then((res) => setData(res.data))
@@ -142,7 +142,7 @@ const Database = () => {
 
     axios[method](path, body, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("acc-token")}`,
+        Authorization: `Bearer ${localStorage.getItem("bupa-acc-token")}`,
       },
     })
       .then((res) => {

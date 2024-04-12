@@ -1,9 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
-import { Avatar, Box, ClickAwayListener, Paper, Popper } from "@mui/material";
-import MainCard from "../../../../ui-component/cards/MainCard";
-import Transitions from "../../../../ui-component/extended/Transitions";
+import { Avatar } from "@mui/material";
 import admin from "../../../../assets/images/bupa/admin.svg";
 
 // ==============================|| PROFILE MENU ||============================== //
@@ -13,16 +11,6 @@ const ProfileSection = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
-  const handleClose = (event) => {
-    if (anchorRef.current && anchorRef.current.contains(event.target)) {
-      return;
-    }
-    setOpen(false);
-  };
-
-  const handleToggle = () => {
-    // setOpen((prevOpen) => !prevOpen);
-  };
 
   const prevOpen = useRef(open);
   useEffect(() => {
@@ -47,53 +35,7 @@ const ProfileSection = () => {
         aria-haspopup="true"
         color="inherit"
         style={{ cursor: "initial" }}
-        onClick={handleToggle}
       />
-      <Popper
-        placement="bottom-end"
-        open={open}
-        anchorEl={anchorRef.current}
-        role={undefined}
-        transition
-        disablePortal
-        popperOptions={{
-          modifiers: [
-            {
-              name: "offset",
-              options: {
-                offset: [0, 14],
-              },
-            },
-          ],
-        }}
-      >
-        {({ TransitionProps }) => (
-          <Transitions in={open} {...TransitionProps}>
-            <Paper>
-              <ClickAwayListener onClickAway={handleClose}>
-                <MainCard
-                  border={false}
-                  elevation={16}
-                  content={false}
-                  boxShadow
-                  shadow={theme.shadows[16]}
-                >
-                  <Box
-                    sx={{
-                      p: 2,
-                      width: "200px",
-                      height: "500px",
-                      textAlign: "center",
-                    }}
-                  >
-                    Admin Info
-                  </Box>
-                </MainCard>
-              </ClickAwayListener>
-            </Paper>
-          </Transitions>
-        )}
-      </Popper>
     </>
   );
 };

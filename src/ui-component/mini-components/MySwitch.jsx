@@ -13,7 +13,7 @@ export default function MySwitch({ user, setForceUpdate }) {
         { is_active: !user.is_active },
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("acc-token")}`,
+            Authorization: `Bearer ${localStorage.getItem("bupa-acc-token")}`,
           },
         }
       )

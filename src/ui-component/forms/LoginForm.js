@@ -28,7 +28,7 @@ export default function LoginForm() {
         setIsLoading(false);
         notifySuccess("Login Successful!");
         navigate("/translate_certificate");
-        localStorage.setItem("acc-token", res.data.tokens.access);
+        localStorage.setItem("bupa-acc-token", res.data.tokens.access);
       })
       .catch((err) => {
         setIsLoading(false);

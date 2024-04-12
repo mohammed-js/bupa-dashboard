@@ -6,7 +6,6 @@ import { ButtonBase } from "@mui/material";
 
 // project imports
 import config from "../../../config";
-import Logo from "../../../ui-component/Logo";
 import { MENU_OPEN } from "../../../store/actions";
 import logo from "../../../assets/images/bupa/logo.svg";
 // ==============================|| MAIN LOGO ||============================== //
@@ -21,7 +20,6 @@ const LogoSection = () => {
       component={Link}
       to={config.defaultPath}
     >
-      {/* <Logo /> */}
       <img src={logo} />
     </ButtonBase>
   );

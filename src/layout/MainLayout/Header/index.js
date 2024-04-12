@@ -68,7 +68,7 @@ const Header = ({ handleLeftDrawerToggle }) => {
       <IconButton color="primary" aria-label="add to shopping cart">
         <LogoutIcon
           onClick={() => {
-            localStorage.removeItem("acc-token");
+            localStorage.removeItem("bupa-acc-token");
             navigate("/login");
             notifySuccess("Logged out!");
           }}
