@@ -10,7 +10,6 @@ import { notifySuccess, notifyError } from "../../utils/toastify";
 import IconButton from "@mui/material/IconButton";
 import uploadSection from "../../assets/images/bupa/upload-section.svg";
 import dragSection from "../../assets/images/bupa/drag-section.svg";
-import dragSection2 from "../../assets/images/bupa/drag-section2.svg";
 import uploadBtn from "../../assets/images/bupa/upload-btn.svg";
 import cancelBtn from "../../assets/images/bupa/cancel-btn.svg";
 import continueBtn from "../../assets/images/bupa/continue-btn.svg";
@@ -245,7 +244,7 @@ const Dashboard = () => {
                 }}
               />
             )}
-            <Box component="img" src={dragSection2} sx={{ width: "100%" }} />
+            <Box component="img" src={dragSection} sx={{ width: "100%" }} />
             {/* buttons */}
             <Box
               sx={{
