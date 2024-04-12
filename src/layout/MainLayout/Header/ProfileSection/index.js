@@ -8,18 +8,7 @@ import admin from "../../../../assets/images/bupa/admin.svg";
 
 const ProfileSection = () => {
   const theme = useTheme();
-  const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
-
-  const prevOpen = useRef(open);
-  useEffect(() => {
-    if (prevOpen.current === true && open === false) {
-      anchorRef.current.focus();
-    }
-
-    prevOpen.current = open;
-  }, [open]);
 
   return (
     <>
@@ -31,8 +20,6 @@ const ProfileSection = () => {
           cursor: "pointer",
         }}
         ref={anchorRef}
-        aria-controls={open ? "menu-list-grow" : undefined}
-        aria-haspopup="true"
         color="inherit"
         style={{ cursor: "initial" }}
       />

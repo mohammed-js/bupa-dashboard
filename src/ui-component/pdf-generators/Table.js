@@ -131,7 +131,3 @@ export default function Table({
     </Box>
   );
 }
-
-/* tr:nth-child(odd) {
-    background-color: #e5e5e5;
-  } */

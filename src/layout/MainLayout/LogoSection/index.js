@@ -1,10 +1,6 @@
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-
-// material-ui
 import { ButtonBase } from "@mui/material";
-
-// project imports
 import config from "../../../config";
 import { MENU_OPEN } from "../../../store/actions";
 import logo from "../../../assets/images/bupa/logo.svg";
